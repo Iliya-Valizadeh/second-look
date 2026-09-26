@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.lycheecache
+dist/
+build/
+*.egg-info/
+.ipynb_checkpoints/
+.env
+
+# Real bank/card statements must never be committed; only synthetic fixtures are
+# checked in. See docs/decisions/ (importer ADR) for the "presets only when
+# confirmed" rule this backs up.
+*.csv
+!tests/fixtures/**/*.csv
+
+# Any downloaded or vendored Pyodide runtime for the web door (path finalized in
+# the web-door ADR; this is a safety net until that folder exists).
+**/pyodide/
