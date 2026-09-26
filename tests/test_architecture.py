@@ -2,8 +2,9 @@
 
 This parses every module in `second_look` and fails if one imports a module that
 does file, network, clock or randomness I/O, or calls `open` or `print`. `cli.py` is
-the one allowed exception, once it exists, because it is Door 1 and its whole job is
-to read files and print.
+allowed, because it is Door 1 and its whole job is to read files and print. `demo.py`
+is also allowed: it is not the engine, only a thin driver, like `cli.py`, that runs
+Door 1 on the committed demo statement for `make demo`.
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ BANNED_IMPORTS = frozenset(
     {"os", "pathlib", "sys", "socket", "urllib", "http", "subprocess", "random"}
 )
 BANNED_CALLS = frozenset({"open", "print"})
-ALLOWED_EXCEPTIONS = frozenset({"cli"})
+ALLOWED_EXCEPTIONS = frozenset({"cli", "demo"})
 
 PACKAGE_DIR = Path(second_look.__file__).resolve().parent
 
