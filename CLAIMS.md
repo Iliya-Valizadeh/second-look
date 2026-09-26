@@ -64,7 +64,8 @@ one line by hand, add the comment `<!-- not-a-claim -->` to it.
 | Varying bills planted, and recall on them | 200, 0.015 | `reports/metrics.json#secondary.recurring_variable_recall` | `make eval` |
 | Planted price increases | 206 | `reports/metrics.json#events.price_increase` | `make eval` |
 | Planted fixed-amount recurring series; refunded duplicates | 1140, 103 | `reports/metrics.json#events` | `make eval` |
-| Lighthouse scores, mobile setting, first screen only: performance, accessibility | 100, 100 | `reports/metrics.json#lighthouse` | `make lighthouse` |
+| Lighthouse scores on the live page, mobile setting, first screen only: performance, accessibility | 100, 100 | `reports/metrics.json#lighthouse` | `npx lighthouse https://iliya-valizadeh.github.io/second-look/` then `python tools/lighthouse_scores.py reports/lighthouse/live_report.json` |
+| Lighthouse scores served locally (before the live deploy), mobile setting, first screen only: performance, accessibility | 100, 100 | `reports/lighthouse/report.json` | `make lighthouse` |
 
 Example row, for the format only:
 `| Test AUC | 0.58 (0.55 to 0.61) | reports/metrics.json#auc | make eval |`
