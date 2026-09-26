@@ -135,3 +135,32 @@ class PriceIncreaseFlag:
     old_amount: Decimal
     new_amount: Decimal
     reason: str
+
+
+@dataclass(frozen=True)
+class DuplicateFlag:
+    """Two charges that may be one charge billed twice (ADR 0002)."""
+
+    type: Literal["duplicate"]
+    lines: tuple[int, ...]
+    merchant: str
+    amount: Decimal
+    first_date: Date
+    second_date: Date
+    reason: str
+
+
+@dataclass(frozen=True)
+class UnusualFlag:
+    """A charge that stands out against the user's own history (ADR 0002)."""
+
+    type: Literal["unusual"]
+    lines: tuple[int, ...]
+    merchant: str
+    date: Date
+    amount: Decimal
+    reason: str
+
+
+Flag = RecurringFlag | PriceIncreaseFlag | DuplicateFlag | UnusualFlag
+"""Any of the four kinds of flag the engine raises (ADR 0002)."""
