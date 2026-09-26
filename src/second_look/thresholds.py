@@ -85,7 +85,10 @@ the statement end."""
 
 DUPLICATE_WINDOW_DAYS = 2
 REFUND_LOOKAHEAD_DAYS = 14
-DUPLICATE_HABIT_PAIRS = 3
+DUPLICATE_HABIT_DATES = 3
+"""A close pair is not flagged when the same merchant and exact amount appear on this
+many different dates or more in the statement. That price is a habit, not a billing
+mistake. Replaces the close-pair count of ADR 0002 (see ADR 0007)."""
 
 # --- Unusual transactions (not read by any code yet; see the module docstring) ----
 
