@@ -157,6 +157,24 @@ def test_flags_a_very_large_charge_at_an_established_merchant() -> None:
     )
 
 
+def test_many_repeated_small_charges_do_not_make_ordinary_charges_look_large() -> None:
+    # ADR 0006: 150 transit fares of $3.35 would make the plain median $3.35, so every
+    # grocery bill of $34 or more would look "10 times your typical charge". Counting
+    # each distinct amount once keeps the typical charge near the grocery bills.
+    fares = [txn(2 + i, (i * 2) // 3, "3.35", "CITY TRANSIT") for i in range(150)]
+    groceries = [txn(200 + i, i * 4, f"{40 + i * 2}.00", "CORNER GROCER") for i in range(25)]
+    assert detect_unusual([*fares, *groceries], recurring_flags=[]) == []
+
+
+def test_the_typical_charge_leaves_out_the_charge_being_judged() -> None:
+    # Every other charge is $10.00. If the $150.00 counted towards its own typical
+    # charge, the distinct amounts {10, 150} would give a typical charge of $80.00.
+    charges = _filler(2, 30) + [txn(32, 70, "150.00", "ONE OFF STORE")]
+    flags = detect_unusual(charges, recurring_flags=[])
+    assert len(flags) == 1
+    assert "15.0 times your typical charge ($10.00)" in flags[0].reason
+
+
 # --- recurring exclusion --------------------------------------------------------------
 
 
@@ -177,6 +195,30 @@ def test_a_charge_already_counted_as_recurring_is_excluded() -> None:
         first_date=d(70),
         last_date=d(70),
         yearly_cost=Decimal("150.00"),
+        reason="made up for this test",
+    )
+    assert detect_unusual(charges, recurring_flags=[recurring]) == []
+
+
+def test_a_merchant_seen_in_a_recurring_series_is_not_new() -> None:
+    # The first STREAMCO charge is part of a recurring series. A later one-off charge
+    # there is not "your first charge at STREAMCO", even though it is the first charge
+    # at that merchant that the unusual tests look at.
+    charges = _filler(2, 30) + [
+        txn(32, 1, "9.99", "STREAMCO"),
+        txn(33, 90, "45.00", "STREAMCO"),
+    ]
+    recurring = RecurringFlag(
+        type="recurring",
+        lines=(32,),
+        merchant="STREAMCO",
+        period="monthly",
+        active=False,
+        amount=Decimal("9.99"),
+        count=1,
+        first_date=d(1),
+        last_date=d(1),
+        yearly_cost=None,
         reason="made up for this test",
     )
     assert detect_unusual(charges, recurring_flags=[recurring]) == []

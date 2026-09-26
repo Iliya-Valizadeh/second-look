@@ -593,4 +593,49 @@ The evaluation task adds tests that check, on the tuning seeds:
 
 ## Changes to this plan
 
-None yet.
+### First test run
+
+The first test run is commit `f532add`, at the ADR 0002 thresholds as written. Step 3
+above asked for this hash when the run was made. It was added here on 2026-09-26, with
+the change below.
+
+That run did not pass the failure bar. Its own `failure_bar.failed_checks` list, kept
+in `reports/metrics.json` under `first_run`:
+
+- recurring precision 0.861, below 0.90
+- duplicate precision 0.1577, below 0.50
+- unusual precision 0.0136, below 0.50
+- the unusual F1 difference from the baseline did not lie above zero (interval low end
+  -0.1193)
+- more than 5 wrong flags per statement across all types
+
+The prediction under "What counts as failure" was right about the cause of the unusual
+result. See [ADR 0006](decisions/0006-typical-charge-for-simple-unusual-rules.md).
+
+### 2026-09-26: typical charge in the simple unusual rules
+
+What changed: the new-merchant and very-large rules now compare a charge with the median
+of the distinct charge amounts, leaving out the charge being judged, instead of the
+median of all charges. The new-merchant rule also counts recurring charges when it
+decides which charge at a merchant came first, as ADR 0002 already said.
+[ADR 0006](decisions/0006-typical-charge-for-simple-unusual-rules.md) gives the
+diagnosis and the reasons.
+
+What did not change: every number in `src/second_look/thresholds.py`, the generator,
+the matching, the metrics, the baselines and the failure bar.
+
+How it was chosen: on the tuning seeds (`0` to `99`) only. The test seeds were then run
+once more.
+
+Where the results are: `reports/metrics.json` holds the new run at the top level and the
+first run, unchanged, under `first_run`. `reports/metrics_first_run.json` is the first
+run's file, byte for byte, and the evaluation copies it into `first_run`.
+
+The new run still does not pass the failure bar. Unusual precision rose from 0.0136 to
+0.4589 (95% interval 0.4263 to 0.4916), still below 0.50. Unusual recall fell from
+1.0 to 0.835 (0.8004 to 0.8677), because the very-large rule no longer fires on almost
+every charge. Wrong unusual flags fell from 187.17 to 2.535 per statement. The unusual
+F1 difference from the baseline is now above zero (0.4342 to 0.499). Recurring and
+duplicate precision are unchanged, since this change does not touch those rules. Wrong
+flags across all types are 8.87 per statement, still above 5. Duplicates alone give
+5.45 of them.
