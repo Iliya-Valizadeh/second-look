@@ -1,0 +1,61 @@
+name: Deploy web door to Pages
+
+# Publishes `web/` on pushes to `main` only, never on other branches. This follows
+# GitHub's standard "Pages via Actions" pattern.
+#
+# `enablement: false` on the Setup Pages step below means this workflow never turns
+# GitHub Pages on for this repository by itself. Someone with repo admin access
+# still has to visit Settings > Pages and set the source to "GitHub Actions" first
+# (a later, separate task, once the repo is public). Until that happens, this
+# workflow's deploy job fails with a clear "Pages is not enabled" error. That
+# failure is expected and does not mean the built site is broken.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+          enable-cache: true
+
+      - name: Install pinned packages
+        run: uv sync --locked
+
+      - name: Build the web door (fetch the pinned Pyodide core, build the wheel)
+        run: make web-build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: false
+
+      - name: Upload the built web/ folder as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
