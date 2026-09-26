@@ -198,3 +198,27 @@ def test_a_charge_already_counted_as_recurring_is_excluded() -> None:
         reason="made up for this test",
     )
     assert detect_unusual(charges, recurring_flags=[recurring]) == []
+
+
+def test_a_merchant_seen_in_a_recurring_series_is_not_new() -> None:
+    # The first STREAMCO charge is part of a recurring series. A later one-off charge
+    # there is not "your first charge at STREAMCO", even though it is the first charge
+    # at that merchant that the unusual tests look at.
+    charges = _filler(2, 30) + [
+        txn(32, 1, "9.99", "STREAMCO"),
+        txn(33, 90, "45.00", "STREAMCO"),
+    ]
+    recurring = RecurringFlag(
+        type="recurring",
+        lines=(32,),
+        merchant="STREAMCO",
+        period="monthly",
+        active=False,
+        amount=Decimal("9.99"),
+        count=1,
+        first_date=d(1),
+        last_date=d(1),
+        yearly_cost=None,
+        reason="made up for this test",
+    )
+    assert detect_unusual(charges, recurring_flags=[recurring]) == []
