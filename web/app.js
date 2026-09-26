@@ -27,6 +27,18 @@ const state = {
   feedback: new Map(), // flag index -> "right" | "wrong" | "not_sure"
 };
 
+// Python (Pyodide) is about 13.5 MB, so it is never fetched on page load. It loads
+// the first time the user actually picks a file, kept to one in-flight load with
+// this promise.
+let pyodideReadyPromise = null;
+
+function ensurePyodideReady() {
+  if (!pyodideReadyPromise) {
+    pyodideReadyPromise = initPyodide();
+  }
+  return pyodideReadyPromise;
+}
+
 const el = (id) => document.getElementById(id);
 
 function setStatus(text) {
@@ -91,6 +103,13 @@ async function handleFile(file) {
   }
   if (!/\.csv$/i.test(file.name) && file.type && file.type !== "text/csv") {
     showPickerError("Please choose a .csv file.");
+    return;
+  }
+  try {
+    await ensurePyodideReady();
+  } catch (err) {
+    setStatus(`Could not start Python: ${err.message}`);
+    showPickerError("This page could not start. Reloading may help.");
     return;
   }
   setStatus(`Reading ${file.name}…`);
@@ -479,16 +498,11 @@ function wireFeedbackExport() {
 
 // ---- Startup -------------------------------------------------------------------
 
-async function main() {
+function main() {
   wirePicker();
   wireMapping();
   wireFeedbackExport();
-  try {
-    await initPyodide();
-  } catch (err) {
-    setStatus(`Could not start Python: ${err.message}`);
-    showPickerError("This page could not start. Reloading may help.");
-  }
+  setStatus("Ready. Choose a statement CSV to begin.");
 }
 
 main();
