@@ -3,7 +3,7 @@
 
 PKG := second_look
 RUN := uv run
-DOCS := README.md CLAIMS.md CHANGELOG.md AI_USAGE.md $(wildcard MODEL_CARD.md DATASHEET.md) docs
+DOCS := README.md CLAIMS.md CHANGELOG.md AI_USAGE.md $(wildcard MODEL_CARD.md DATASHEET.md) docs $(wildcard reports/*.md)
 WEB_PYODIDE_DIR := web/pyodide
 WEB_DIST_DIR := web/dist
 
