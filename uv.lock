@@ -1520,14 +1520,10 @@ wheels = [
 name = "second-look"
 version = "0.1.0"
 source = { editable = "." }
-dependencies = [
-    { name = "matplotlib" },
-    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "numpy", version = "2.5.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-]
 
 [package.dev-dependencies]
 dev = [
+    { name = "matplotlib" },
     { name = "mypy" },
     { name = "pre-commit" },
     { name = "pytest" },
@@ -1537,13 +1533,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "matplotlib", specifier = ">=3.8" },
-    { name = "numpy", specifier = ">=1.26" },
-]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "matplotlib", specifier = ">=3.8" },
     { name = "mypy", specifier = ">=1.10" },
     { name = "pre-commit", specifier = ">=3.7" },
     { name = "pytest", specifier = ">=8.0" },

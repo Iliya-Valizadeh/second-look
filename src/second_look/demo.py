@@ -1,28 +1,41 @@
-"""Short demo for `make demo`. It must run with no downloads and no keys.
+"""Runs the command line on a small, committed, made-up statement for `make demo`.
 
-It runs the same evaluation as `make eval` on the built-in synthetic data and prints
-the result. It writes no files. Replace it with a demo of your real pipeline.
+This is not the engine. Like `cli.py`, it is a thin driver, so it is also allowed to
+read a file and print (see the exception in `tests/test_architecture.py`). It reads no
+real statement, downloads nothing and needs no key: the statement it runs on is
+`tests/fixtures/synthetic_demo_statement.csv`, made up for this demo (ADR 0005).
 """
 
 from __future__ import annotations
 
-from .evaluate import run_evaluation
+from pathlib import Path
 
+from . import cli
 
-def _line(label: str, est: dict[str, float]) -> str:
-    interval = f"(95% interval {est['ci_low']:.3f} to {est['ci_high']:.3f})"
-    return f"{label:<28}{est['value']:.3f}  {interval}"
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+DEMO_STATEMENT = _REPO_ROOT / "tests" / "fixtures" / "synthetic_demo_statement.csv"
+
+DEMO_ARGS = (
+    str(DEMO_STATEMENT),
+    "--date-column",
+    "Date",
+    "--date-format",
+    "YYYY-MM-DD",
+    "--description-column",
+    "Description",
+    "--amount-column",
+    "Amount",
+    "--sign-convention",
+    "charges-negative",
+    "--category-column",
+    "Category",
+)
 
 
 def main() -> int:
-    metrics, _ = run_evaluation()
-    print(f"Synthetic data: {metrics['n_train']} training rows, {metrics['n_test']} test rows.")
-    print("Mean absolute error on the test rows (lower is better):")
-    print(_line("  Baseline (training mean)", metrics["baseline"]))
-    print(_line("  Linear model", metrics["model"]))
-    print(_line("  Gap (baseline - model)", metrics["mae_gap"]))
-    return 0
+    print("This demo statement is made up for this demo. It is not anyone's real bank data.\n")
+    return cli.main(DEMO_ARGS)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     raise SystemExit(main())
