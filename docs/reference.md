@@ -12,15 +12,20 @@ Facts to look up: commands, files and settings.
 | `make eval` | Runs the evaluation and writes `reports/metrics.json` |
 | `make demo` | Runs a short demo that needs no downloads or keys |
 | `make check-docs` | Runs the claims, readability, AI-writing signs, link and README checks |
-| `make lighthouse` | Serves `web/` locally and runs Lighthouse (mobile preset) against it, then copies the performance and accessibility scores into `reports/metrics.json`. Needs Node.js; not part of `all` since CI has no Node |
-| `make all` | Runs every step above in order |
+| `make error-analysis` | Sorts every wrong flag and miss on the test seeds by cause and writes `reports/error_analysis.json` |
+| `make web-build` | Fetches the pinned [Pyodide](glossary.md#pyodide) files and builds the package's wheel for the web page. Needs the network |
+| `make web-test` | Builds the web page, then runs its headless-browser test in Chromium |
+| `make lighthouse` | Serves `web/` locally and runs Lighthouse (mobile preset) against it, then copies the performance and accessibility scores into `reports/metrics.json`. It audits the first screen only. Needs Node.js; not part of `all` since CI has no Node |
+| `make all` | Runs `setup`, `lint`, `test`, `eval`, `error-analysis`, `demo` and `check-docs`, in that order |
 
 ## Output files
 
 | File | What it holds |
 |---|---|
 | `reports/metrics.json` | The headline numbers, read by `CLAIMS.md` and the portfolio site |
-| `reports/figures/mae_by_model.png` | The headline chart that `make eval` draws |
+| `reports/figures/headline.png` | The headline chart that `make eval` draws |
+| `reports/error_analysis.json` | The counts by cause that `make error-analysis` writes |
+| `reports/lighthouse/report.json` | The last Lighthouse report that `make lighthouse` wrote |
 
 ## Package
 
