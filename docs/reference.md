@@ -53,6 +53,29 @@ Facts to look up: commands, files and settings.
 Give either `--amount-column` with `--sign-convention`, or both `--debit-column` and
 `--credit-column`, matching the column mapping in [ADR 0003](decisions/0003-importing-statements.md).
 
+## Reason strings
+
+Every flag carries a plain-English reason, built from one of the patterns below.
+[ADR 0002](decisions/0002-detection-rules-and-thresholds.md) sets the wording, and
+[ADR 0005](decisions/0005-privacy-and-wording.md) sets the words the tool never uses.
+`{}` stands for a value the tool fills in: amounts as dollars with two decimals, ratios
+with one decimal, percentages as whole numbers, and dates as `YYYY-MM-DD`.
+
+| Flag | Reason pattern |
+|---|---|
+| Recurring | `{merchant}: {amount} charged {every week / every month / every year}, {n} times from {first} to {last}. About {yearly} a year at the latest price.` |
+| Recurring, stopped | `{merchant}: {amount} charged {period}, {n} times. The last charge was {last}, so it seems to have stopped.` |
+| Recurring, yearly, two charges | `{merchant}: {amount} charged twice, a year apart ({first} and {last}). About {yearly} a year if it continues.` |
+| Price increase | `{merchant} went from {old} to {new} ({pct}% more) starting {date}. At the new price that adds about {yearly_diff} a year.` |
+| Duplicate | `Two charges of {amount} at {merchant}, on {date1} and {date2}. The same amount at the same place within {days} days can be a double charge.` |
+| Unusual, merchant | `{amount} at {merchant} on {date} is {ratio} times your usual amount there (usual: {median}, from {n} other charges).` |
+| Unusual, category | `{amount} at {merchant} on {date} is {ratio} times your usual amount for {category} (usual: {median}, from {n} other charges).` |
+| New merchant | `{amount} on {date} is your first charge at {merchant} in {days} days of history, and {ratio} times your typical charge ({median}).` |
+| Very large | `{amount} at {merchant} on {date} is {ratio} times your typical charge ({median}).` |
+
+A reason never guesses why a charge happened and never tells the user what to do with
+their money. The section title on every screen is "Worth a second look".
+
 ## Bank CSV presets
 
 [ADR 0003](decisions/0003-importing-statements.md) allows a named preset only when a
