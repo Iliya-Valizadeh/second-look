@@ -75,6 +75,7 @@ The full list is in [docs/whats_weak.md](docs/whats_weak.md).
 | `src/` | The package code |
 | `tests/` | Unit and data tests |
 | `tools/` | Checks for claims, readability, AI-writing signs and links |
+| `web/` | The web door: the same package running in the browser through Pyodide |
 <!-- repo-map:end -->
 
 ## License
