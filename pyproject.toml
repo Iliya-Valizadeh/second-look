@@ -6,10 +6,10 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Iliya Valizadeh" }]
 requires-python = ">=3.11"
-dependencies = [
-    "matplotlib>=3.8",
-    "numpy>=1.26",
-]
+# The core uses only the Python standard library (ADR 0001), so it has no runtime
+# dependencies here. A later task adds matplotlib for the evaluation chart, but that
+# script lives outside src/second_look and so is a dev dependency, not a runtime one.
+dependencies = []
 
 [dependency-groups]
 dev = [
