@@ -25,5 +25,8 @@ git tag.
   look unusual.
 - The new-merchant rule counts recurring charges when it decides which charge at a
   merchant came first, as ADR 0002 says.
+- The duplicate rule skips a close pair when the same merchant and exact amount
+  appear on three or more dates (ADR 0007). It used to count close pairs, so a usual
+  coffee order bought often was flagged as a possible double charge.
 - `reports/metrics.json` keeps the first test run under `first_run`, and its failure
   bar now also gives the wrong flags per statement as a number.

@@ -4,8 +4,9 @@
 `detect_duplicates` looks only at charges that `detect_recurring` has not already
 claimed, since a recognized recurring charge is a habit, not a billing mistake. A
 close pair is also skipped when a refund fixes it, or when the same merchant and
-amount pair up this often elsewhere in the statement, which looks like a habit (such
-as a transit fare paid twice a day) rather than a double charge.
+exact amount appear on several different dates in the statement (ADR 0007). A price
+paid again and again, such as a transit fare or one coffee order, is a habit, and two
+of those charges close together are two purchases, not a double charge.
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ from decimal import Decimal
 
 from .merchant import merchant_key
 from .models import DuplicateFlag, RecurringFlag, Transaction
-from .thresholds import DUPLICATE_HABIT_PAIRS, DUPLICATE_WINDOW_DAYS, REFUND_LOOKAHEAD_DAYS
+from .thresholds import DUPLICATE_HABIT_DATES, DUPLICATE_WINDOW_DAYS, REFUND_LOOKAHEAD_DAYS
 
 
 def detect_duplicates(
@@ -49,13 +50,13 @@ def detect_duplicates(
             by_amount.setdefault(txn.amount, []).append(txn)
 
         for same_amount in by_amount.values():
+            if len({txn.date for txn in same_amount}) >= DUPLICATE_HABIT_DATES:
+                continue  # a price paid often, such as a fare or a usual coffee (ADR 0007)
             pairs = [
                 (earlier, later)
                 for earlier, later in zip(same_amount, same_amount[1:], strict=False)
                 if (later.date - earlier.date).days <= DUPLICATE_WINDOW_DAYS
             ]
-            if len(pairs) >= DUPLICATE_HABIT_PAIRS:
-                continue  # a habit, such as a fare paid twice a day, not a mistake
             for earlier, later in pairs:
                 if _has_matching_refund(refunds, earlier.amount, later.date):
                     continue
