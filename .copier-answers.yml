@@ -1,0 +1,13 @@
+# Written by Copier. Do not edit by hand; `copier update` reads it.
+_commit: v1.0
+_src_path: gh:Iliya-Valizadeh/ds-project-standard
+author_name: Iliya Valizadeh
+copyright_year: 2026
+github_user: Iliya-Valizadeh
+has_dataset: true
+has_model: false
+one_line: Finds recurring charges, price rises, duplicates and odd spending in your
+    browser
+package_name: second_look
+project_name: second-look
+python_version: '3.11'
