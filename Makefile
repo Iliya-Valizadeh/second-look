@@ -3,11 +3,11 @@
 
 PKG := second_look
 RUN := uv run
-DOCS := README.md CLAIMS.md CHANGELOG.md AI_USAGE.md $(wildcard MODEL_CARD.md DATASHEET.md) docs
+DOCS := README.md CLAIMS.md CHANGELOG.md AI_USAGE.md $(wildcard MODEL_CARD.md DATASHEET.md) docs $(wildcard reports/*.md)
 WEB_PYODIDE_DIR := web/pyodide
 WEB_DIST_DIR := web/dist
 
-.PHONY: setup lint test eval demo check-docs web-pyodide web-wheel web-build web-test lighthouse all
+.PHONY: setup lint test eval error-analysis demo check-docs web-pyodide web-wheel web-build web-test lighthouse all
 
 setup:
 	uv sync
@@ -22,6 +22,11 @@ test:
 
 eval:
 	$(RUN) python -m evaluation.evaluate
+
+# Sorts every wrong flag and miss on the test seeds into causes, for
+# reports/error_analysis.md. Reads the engine only; changes no rule or number.
+error-analysis:
+	$(RUN) python -m evaluation.error_analysis
 
 demo:
 	$(RUN) python -m $(PKG).demo
@@ -68,4 +73,4 @@ lighthouse: web-build
 	kill $$(cat /tmp/second_look_lighthouse_server.pid) 2>/dev/null || true
 	$(RUN) python tools/lighthouse_scores.py reports/lighthouse/report.json
 
-all: setup lint test eval demo check-docs
+all: setup lint test eval error-analysis demo check-docs
