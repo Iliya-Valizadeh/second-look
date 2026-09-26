@@ -11,6 +11,9 @@ requires-python = ">=3.11"
 # script lives outside src/second_look and so is a dev dependency, not a runtime one.
 dependencies = []
 
+[project.scripts]
+second-look = "second_look.cli:main"
+
 [dependency-groups]
 dev = [
     "mypy>=1.10",
