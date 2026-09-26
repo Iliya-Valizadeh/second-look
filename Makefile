@@ -19,7 +19,7 @@ test:
 	$(RUN) pytest
 
 eval:
-	$(RUN) python -m $(PKG).evaluate
+	$(RUN) python -m evaluation.evaluate
 
 demo:
 	$(RUN) python -m $(PKG).demo

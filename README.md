@@ -69,6 +69,7 @@ The full list is in [docs/whats_weak.md](docs/whats_weak.md).
 | `.github/` | CI workflows and GitHub settings |
 | `CLAIMS.md` | Every number in the docs, with its source file and command |
 | `docs/` | Evaluation plan, decisions, glossary and the four kinds of docs |
+| `evaluation/` | The synthetic statement generator, baselines and evaluation script |
 | `Makefile` | One command for each step: setup, lint, test, eval, demo |
 | `reports/` | Generated results, including metrics.json |
 | `src/` | The package code |

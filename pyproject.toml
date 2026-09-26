@@ -6,13 +6,17 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Iliya Valizadeh" }]
 requires-python = ">=3.11"
-dependencies = [
-    "matplotlib>=3.8",
-    "numpy>=1.26",
-]
+# The core uses only the Python standard library (ADR 0001), so it has no runtime
+# dependencies here. A later task adds matplotlib for the evaluation chart, but that
+# script lives outside src/second_look and so is a dev dependency, not a runtime one.
+dependencies = []
+
+[project.scripts]
+second-look = "second_look.cli:main"
 
 [dependency-groups]
 dev = [
+    "matplotlib>=3.8",
     "mypy>=1.10",
     "pre-commit>=3.7",
     "pytest>=8.0",
@@ -30,6 +34,7 @@ packages = ["src/second_look"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-q --cov=second_look --cov-report=term-missing --cov-fail-under=80"
 
 [tool.ruff]
@@ -44,4 +49,4 @@ select = ["E", "F", "W", "I", "B", "UP"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests"]
+files = ["src", "tests", "evaluation"]
