@@ -207,7 +207,8 @@ Lighthouse, run once by hand with its mobile setting, scored 100 for performance
 only the first screen. The mapping and results screens were hidden, and Lighthouse
 skipped their checks, such as whether each drop-down has a name. Lighthouse also lists
 checks it cannot do on its own, such as tab order and focus. No one has done those by
-hand or tried the page with a screen reader.
+hand or tried the page with a screen reader. The report also comes from before the
+review pass added a few sentences to the page, and it was not run again.
 
 No test with real users has been run, so there is no evidence yet on whether an
 ordinary user can map a statement and read the flags without help.
