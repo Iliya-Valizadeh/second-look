@@ -23,3 +23,7 @@ build/
 # Any downloaded or vendored Pyodide runtime for the web door (path finalized in
 # the web-door ADR; this is a safety net until that folder exists).
 **/pyodide/
+
+# Playwright's own output from the web-door browser test.
+test-results/
+playwright-report/
