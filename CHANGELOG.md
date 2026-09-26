@@ -32,8 +32,9 @@ git tag.
   [Pyodide](docs/glossary.md#pyodide), with a column-mapping screen, a
   [Content-Security-Policy](docs/glossary.md#content-security-policy-csp), and a
   local-only feedback export (ADR 0004, ADR 0005).
-- A headless-browser test (Playwright) that fails the build if the web page makes any
-  network request outside a fixed list of the site's own files.
+- A headless-browser test (Playwright) that runs the web page once on the demo
+  statement and fails the build if the page makes any network request outside a fixed
+  list of the site's own files.
 - A check of the five named Canadian banks' own help pages for a confirmed CSV preset;
   none was found (`docs/reference.md`, `docs/whats_weak.md`).
 - A Lighthouse run of the web page, wired into `reports/metrics.json`
@@ -60,3 +61,7 @@ git tag.
 - `docs/eval_plan.md` gained a dated correction: the demo statement was never generator
   output at seed `9000`, and the generator's `dump_dir` argument was never built as a
   `--dump` command-line flag. Neither claim affected any reported number.
+- A review pass before release made the README, the docs and the web page's text match
+  the evidence. It added the first run's verdict and both eval-plan caveats to the
+  README result, a note to ADR 0003 on the parts that were not built, and new items to
+  `docs/whats_weak.md`.

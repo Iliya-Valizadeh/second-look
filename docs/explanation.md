@@ -47,10 +47,12 @@ is handled and how the tool talks about it.
 It runs the same `second_look` package inside the browser with
 [Pyodide](glossary.md#pyodide), so a statement never has to leave the user's device.
 The page's [Content-Security-Policy (CSP)](glossary.md#content-security-policy-csp)
-blocks its own code from contacting any address other than the page's own origin, and
-a browser test in CI fails the build if any request goes anywhere else. Some limits
-stay: a `<meta>` CSP cannot stop another site from framing the page, only Chromium is
-tested, and a browser extension the user installed runs outside the page's CSP.
+blocks its own code from contacting any address other than the page's own origin. A
+browser test in CI runs the page once on the demo statement and fails the build if any
+request goes anywhere else, or outside a fixed list of the site's own files. Some
+limits stay. The test covers that one run only, in Chromium only. A `<meta>` CSP
+cannot stop another site from framing the page. A browser extension the user
+installed runs outside the page's CSP.
 
 [ADR 0005](decisions/0005-privacy-and-wording.md) is about what the tool says and what
 it keeps. The tool never suggests a crime; a flag means a charge matches a pattern, not
@@ -66,8 +68,11 @@ Every decision record lists an option not taken and why. A few costs are worth s
 here in one place:
 
 - No bank format is guessed ([ADR 0003](decisions/0003-importing-statements.md)). This
-  makes every bank's CSV work from the first release, at the cost of one manual
-  mapping step for every user, since [no preset is confirmed yet](reference.md#bank-csv-presets).
+  means any bank's CSV can be mapped from the first release, if its dates and amounts
+  use a layout the importer reads. No real bank export has been tried yet. The cost is
+  one manual mapping step for every user, since
+  [no preset is confirmed yet](reference.md#bank-csv-presets), and a wrong sign choice
+  that the tool does not catch ([what's weak](whats_weak.md)).
 - Merchant names are grouped by an exact key after fixed cleaning steps, not by fuzzy
   matching ([ADR 0002](decisions/0002-detection-rules-and-thresholds.md)). This avoids
   merging two different merchants into one false recurring charge, at the cost of

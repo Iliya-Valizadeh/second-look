@@ -16,12 +16,13 @@ causes are explained in [reports/error_analysis.md](../reports/error_analysis.md
 | 2 | Unusual-charge [precision](glossary.md#precision) is below its own bar | One fix (ADR 0006). The main remaining cause is found but not fixed |
 | 3 | Recurring-charge precision is below its own bar | Cause found. Nothing changed yet |
 | 4 | Some real recurring patterns are missed by design | Written in ADR 0002. Nothing changed |
-| 5 | Unusual charges without a category column | Nothing. Depends on the bank's export |
-| 6 | Real double charges at a price paid often are skipped | Accepted in ADR 0007 as the cost of the fix |
-| 7 | A one-off extra charge hides a price increase | Cause found. Nothing changed yet |
-| 8 | The fixes were chosen after seeing the failed test run | Choices made on the tuning seeds only. The comparisons are not committed |
-| 9 | Web page limits: one browser tested, [Content-Security-Policy](glossary.md#content-security-policy-csp) gaps | Written in ADR 0004 |
-| 10 | No confirmed bank presets | Each bank's own help pages checked. None found |
+| 5 | A wrong sign choice gives an empty result with no warning | Found in the review pass. Nothing changed yet |
+| 6 | Unusual charges without a category column | Nothing. Depends on the bank's export |
+| 7 | Real double charges at a price paid often are skipped | Accepted in ADR 0007 as the cost of the fix |
+| 8 | A one-off extra charge hides a price increase | Cause found. Nothing changed yet |
+| 9 | The fixes were chosen after seeing the failed test run | Choices made on the tuning seeds only. The comparisons are not committed |
+| 10 | Web page limits: one browser, one tested run, the first screen audited, no user tests | Written down. Nothing else yet |
+| 11 | No confirmed bank presets | Each bank's own help pages checked. None found |
 
 ## 1. Tested on synthetic statements only
 
@@ -40,8 +41,8 @@ The stress set gives a hint of how much this matters. With a little more posting
 delay, currency noise and changing descriptions, recurring [recall](glossary.md#recall)
 falls from 0.9588 to 0.5959.
 
-What was done: the caveat is in the eval plan and will sit next to the headline in
-the README. The web page has a local feedback export
+What was done: the caveat is in the eval plan and in the same paragraph as the
+headline in the README. The web page has a local feedback export
 ([ADR 0005](decisions/0005-privacy-and-wording.md)). It is the only way to learn about
 real statements, and it depends on users choosing to share a file, so it will be
 rare. No real-world result exists yet.
@@ -98,7 +99,34 @@ These misses are silent. A user sees a clean list and may think nothing else rep
 
 What was done: ADR 0002 and the eval plan state these limits. Nothing changed.
 
-## 5. Unusual charges without a category column
+## 5. A wrong sign choice gives an empty result with no warning
+
+The user tells the tool which sign means a charge. If that choice is wrong, every
+charge is read as money coming in. The tool then finds nothing and says "Nothing
+worth a second look in this statement." The summary line gives no hint, because the
+rows still count as used. A run of the demo statement with the wrong sign shows this.
+
+[ADR 0003](decisions/0003-importing-statements.md) planned three safeguards that were
+not built:
+
+- The web page was to show the first rows as parsed, such as `charge $12.00`. It shows
+  the raw rows from the file instead.
+- The web page was never to pre-fill the sign. It starts with "Charges are negative"
+  already chosen.
+- The importer was to suggest the date formats that read every row. The user picks the
+  format, and the default is `YYYY-MM-DD`. A wrong format usually shows, because each
+  row it cannot read is skipped and listed with its reason. But if every day in the
+  file is `12` or lower, month-first and day-first both read every row. A wrong choice
+  then gives wrong dates with no message.
+
+This matters for real users, since some banks show purchases as positive numbers and
+some as negative.
+
+What was done: found in the review pass before release. The how-to guide and the
+mapping screen now tell the user to check a known purchase. The safeguards themselves
+are not built.
+
+## 6. Unusual charges without a category column
 
 The per-category test runs only when the export has a category column and the user maps
 it. Many bank exports may not have one. On synthetic chequing statements, which have
@@ -108,7 +136,7 @@ statements, which have one, it found 0.7975.
 What was done: nothing. The engine does not guess categories from merchant names, on
 purpose (ADR 0002).
 
-## 6. Real double charges at a price paid often are skipped
+## 7. Real double charges at a price paid often are skipped
 
 [ADR 0007](decisions/0007-habit-test-for-duplicates.md) fixed most wrong duplicate
 flags with a habit test. A close pair is skipped when the same shop and exact amount
@@ -122,7 +150,7 @@ charges are often small, which limits the harm.
 
 What was done: accepted in ADR 0007 as the price of the fix.
 
-## 7. A one-off extra charge hides a price increase
+## 8. A one-off extra charge hides a price increase
 
 All 14 missed price increases (of 206 planted) have one cause. A one-off extra charge
 at the same subscription came before the new price. The engine tries to join a series
@@ -133,7 +161,7 @@ and the price increase is never reported.
 What was done: nothing yet. The error analysis names the code path. The price increase
 detector still passes its bar.
 
-## 8. The fixes were chosen after seeing the failed test run
+## 9. The fixes were chosen after seeing the failed test run
 
 The eval plan allows tuning only on the tuning seeds (`0` to `99`), never on the test
 seeds (`1000` to `1199`). Both fixes followed that rule for the choices they made:
@@ -154,24 +182,40 @@ comparisons.
 What was done: every change is recorded as a dated deviation in the eval plan, and the
 first run stays in `reports/metrics.json` unchanged.
 
-## 9. Web page limits
+## 10. Web page limits
 
 From [ADR 0004](decisions/0004-web-door-pyodide-and-csp.md):
 
 - The browser test in CI runs in Chromium only. Firefox and Safari are not tested.
-- The page sets its Content-Security-Policy in a `<meta>` tag, which cannot stop
-  another site from showing the page in a frame.
+- The page sets its [Content-Security-Policy](glossary.md#content-security-policy-csp)
+  in a `<meta>` tag, which cannot stop another site from showing the page in a frame.
 - The policy allows requests to the site's own address. The browser test and the short
   code cover this, not the policy.
 - Browser extensions the user installed run outside the policy.
+
+The browser test that checks for stray requests covers one run: the demo statement,
+with the suggested mapping, up to the results screen. It does not press "Save my
+feedback", mark any flag, try a file that fails, or try a second file. It also does not
+check that the feedback file leaves out merchant names by default.
 
 Also, CI runs the Python tests on Python `3.11` only. The core must also run on the
 Python `3.14` inside [Pyodide](glossary.md#pyodide). Only the browser test, on the
 demo statement, checks that.
 
+Lighthouse, run once by hand with its mobile setting, scored 100 for performance and
+100 for accessibility. That run loaded the page and did nothing else, so it checked
+only the first screen. The mapping and results screens were hidden, and Lighthouse
+skipped their checks, such as whether each drop-down has a name. Lighthouse also lists
+checks it cannot do on its own, such as tab order and focus. No one has done those by
+hand or tried the page with a screen reader. The report also comes from before the
+review pass added a few sentences to the page, and it was not run again.
+
+No test with real users has been run, so there is no evidence yet on whether an
+ordinary user can map a statement and read the flags without help.
+
 What was done: the limits are written down. Nothing else yet.
 
-## 10. No confirmed bank presets
+## 11. No confirmed bank presets
 
 There is no preset for RBC, TD, CIBC, BMO or Scotiabank. So every user maps the
 columns by hand, even for a common bank.
