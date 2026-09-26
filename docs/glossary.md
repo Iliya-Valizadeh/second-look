@@ -18,6 +18,11 @@ with repeats allowed, and compute the number again on each one.
 A range around a measured number that shows how much the number could move if the
 test were run again on new data.
 
+## Content-Security-Policy (CSP)
+
+A rule a web page sends to the browser that limits which addresses the page's own
+code can load a script from or send a request to.
+
 ## F1 score
 
 One score that combines precision and recall. It is high only when both are high.
@@ -27,10 +32,21 @@ One score that combines precision and recall. It is high only when both are high
 The average size of a miss, in the same units as the thing being predicted. Lower is
 better.
 
+## Modified z-score
+
+A score that shows how far a value sits from the middle of a group of values. It is
+built so that one far-off value in the group cannot pull the score of the value being
+checked back down.
+
 ## Precision
 
 Of all the flags a method raises, the share that point at something real. High
 precision means few wrong flags.
+
+## Pyodide
+
+A build of Python that runs inside a web browser, so a page can run Python code with
+nothing sent to a server.
 
 ## Recall
 

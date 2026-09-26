@@ -42,8 +42,9 @@ For recurring charges:
 
 For unusual transactions:
 
-1. Median-based z-scores (the modified z-score of Iglewicz and Hoaglin), plus a few
-   simple rules. One large value does not hide itself by stretching the spread.
+1. Median-based z-scores (the [modified z-score](../glossary.md#modified-z-score) of
+   Iglewicz and Hoaglin), plus a few simple rules. One large value does not hide itself
+   by stretching the spread.
 2. Ordinary z-scores with the mean and standard deviation. One large charge inflates
    the standard deviation, which makes that same charge look less unusual.
 3. A trained model, such as an isolation forest. There are no labels for real
