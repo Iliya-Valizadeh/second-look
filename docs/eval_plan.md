@@ -639,3 +639,35 @@ F1 difference from the baseline is now above zero (0.4342 to 0.499). Recurring a
 duplicate precision are unchanged, since this change does not touch those rules. Wrong
 flags across all types are 8.87 per statement, still above 5. Duplicates alone give
 5.45 of them.
+
+The run described in this section is commit `7852a68`. Its `reports/metrics.json` is
+kept, byte for byte, as `reports/metrics_adr0006_run.json`, so the numbers above can
+still be checked after later runs.
+
+### 2026-09-26: habit test in the duplicate rule
+
+What changed: a close pair of charges is no longer flagged as a possible duplicate when
+the same merchant key and exact amount appear on three or more different dates in the
+statement. Before, the pair was skipped only when there were three or more close pairs.
+[ADR 0007](decisions/0007-habit-test-for-duplicates.md) gives the diagnosis and the
+reasons. In short, almost every wrong duplicate flag was two charges of a usual coffee
+order at a fixed menu price.
+
+What did not change: the generator, the matching, the metrics, the baselines and the
+failure bar. In `src/second_look/thresholds.py`, `DUPLICATE_HABIT_DATES = 3` replaces
+`DUPLICATE_HABIT_PAIRS = 3`. No other number changed.
+
+How it was chosen: on the tuning seeds (`0` to `99`) only. The test seeds were then run
+once more.
+
+Where the results are: `reports/metrics.json` holds the new run at the top level. The
+first run is still under `first_run`, unchanged.
+
+Results on the test seeds: duplicate precision rose from 0.1577 to 0.9808 (95% interval
+0.9563 to 1.0). Duplicate recall is unchanged at 0.9903 (0.9752 to 1.0). Wrong duplicate
+flags fell from 5.45 to 0.02 per statement. Wrong flags across all types fell from 8.87
+to 3.44 per statement, now below 5. The failure bar still fails on two checks, which this
+change does not touch: recurring precision 0.861, below 0.90, and unusual precision
+0.4589, below 0.50. The new habit test also misses real double charges at a price the
+person pays often. The generator never plants those, so this run cannot measure that
+loss. ADR 0007 explains it.

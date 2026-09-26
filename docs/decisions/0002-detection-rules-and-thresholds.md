@@ -2,7 +2,9 @@
 
 Date: 2026-09-25. Status: accepted. The "median of all charges in the statement" in the
 two simple unusual-transaction rules is replaced by
-[ADR 0006](0006-typical-charge-for-simple-unusual-rules.md) (2026-09-26).
+[ADR 0006](0006-typical-charge-for-simple-unusual-rules.md) (2026-09-26). The habit
+exception in the duplicate rule is replaced by
+[ADR 0007](0007-habit-test-for-duplicates.md) (2026-09-26).
 
 ## Context
 

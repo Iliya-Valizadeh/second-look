@@ -19,8 +19,12 @@ one line by hand, add the comment `<!-- not-a-claim -->` to it.
 | Unusual recall | 0.835 (0.8004 to 0.8677) | `reports/metrics.json#engine.unusual.recall` | `make eval` |
 | Wrong unusual flags per statement | 2.535 | `reports/metrics.json#engine.unusual` | `make eval` |
 | Unusual F1 difference from the [baseline](docs/glossary.md#baseline) | 0.4342 to 0.499 | `reports/metrics.json#f1_difference.unusual` | `make eval` |
-| Wrong flags per statement, all types | 8.87 | `reports/metrics.json#failure_bar.wrong_flags_per_statement` | `make eval` |
-| Wrong duplicate flags per statement | 5.45 | `reports/metrics.json#engine.duplicate` | `make eval` |
+| After ADR 0006: wrong flags per statement, all types | 8.87 | `reports/metrics_adr0006_run.json#failure_bar.wrong_flags_per_statement` | `make eval` at commit `7852a68` |
+| First run: wrong duplicate flags per statement | 5.45 | `reports/metrics.json#first_run.metrics.engine.duplicate` | `make eval` |
+| Duplicate precision | 0.9808 (0.9563 to 1.0) | `reports/metrics.json#engine.duplicate.precision` | `make eval` |
+| Duplicate recall | 0.9903 (0.9752 to 1.0) | `reports/metrics.json#engine.duplicate.recall` | `make eval` |
+| Wrong duplicate flags per statement | 0.02 | `reports/metrics.json#engine.duplicate` | `make eval` |
+| Wrong flags per statement, all types | 3.44 | `reports/metrics.json#failure_bar.wrong_flags_per_statement` | `make eval` |
 | Interval level | 95% | `reports/metrics.json#interval.level` | `make eval` |
 | Failure bar: recurring precision | 0.90 | `evaluation/evaluate.py` | none (a constant in the code) |
 | Failure bar: duplicate and unusual precision | 0.50 | `evaluation/evaluate.py` | none (a constant in the code) |

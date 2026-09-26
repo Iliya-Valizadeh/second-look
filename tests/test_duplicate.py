@@ -94,9 +94,9 @@ def test_a_refund_of_a_different_amount_does_not_clear_the_pair() -> None:
     assert len(detect_duplicates(charges, recurring_flags=[])) == 1
 
 
-def test_a_habit_of_close_pairs_is_not_flagged() -> None:
-    # A transit fare charged twice a day, four days running: three or more close
-    # pairs at the same merchant and amount looks like a habit, not a mistake.
+def test_a_fare_paid_most_days_is_a_habit() -> None:
+    # A transit fare charged twice a day, three days running: the same merchant and
+    # amount on three different dates is a habit, not a mistake (ADR 0007).
     charges = [
         txn(2, 0, "3.25"),
         txn(3, 0, "3.25"),
@@ -108,8 +108,16 @@ def test_a_habit_of_close_pairs_is_not_flagged() -> None:
     assert detect_duplicates(charges, recurring_flags=[]) == []
 
 
-def test_two_close_pairs_are_still_flagged() -> None:
-    # Below the habit count of three pairs, so both pairs are flagged.
+def test_a_usual_order_bought_on_another_day_is_a_habit() -> None:
+    # The error the first test run found: one coffee order at its menu price, bought
+    # twice in two days and once more weeks later. Only one pair is close, but the
+    # price shows up on three dates, so it is a usual order (ADR 0007).
+    charges = [txn(2, 0, "4.75"), txn(3, 1, "4.75"), txn(4, 30, "4.75")]
+    assert detect_duplicates(charges, recurring_flags=[]) == []
+
+
+def test_close_pairs_on_two_dates_are_still_flagged() -> None:
+    # Two dates is below the habit count of three dates, so both pairs are flagged.
     charges = [
         txn(2, 0, "3.25"),
         txn(3, 0, "3.25"),
@@ -118,6 +126,14 @@ def test_two_close_pairs_are_still_flagged() -> None:
     ]
     flags = detect_duplicates(charges, recurring_flags=[])
     assert len(flags) == 2
+
+
+def test_three_charges_on_one_day_are_flagged() -> None:
+    # Three charges of one amount on one day is one date, not a habit. Each charge
+    # next to another in date order makes a pair, so there are two flags.
+    charges = [txn(2, 0, "58.20"), txn(3, 0, "58.20"), txn(4, 0, "58.20")]
+    flags = detect_duplicates(charges, recurring_flags=[])
+    assert [flag.lines for flag in flags] == [(2, 3), (3, 4)]
 
 
 def test_a_charge_already_counted_as_recurring_is_excluded() -> None:
