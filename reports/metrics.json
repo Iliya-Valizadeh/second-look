@@ -158,25 +158,25 @@
     },
     "unusual": {
       "f1": {
-        "ci_high": 0.029,
-        "ci_low": 0.0248,
-        "value": 0.0268
+        "ci_high": 0.6215,
+        "ci_low": 0.5607,
+        "value": 0.5923
       },
-      "hits": 515,
-      "misses": 0,
+      "hits": 430,
+      "misses": 85,
       "precision": {
-        "ci_high": 0.0147,
-        "ci_low": 0.0125,
-        "value": 0.0136
+        "ci_high": 0.4916,
+        "ci_low": 0.4263,
+        "value": 0.4589
       },
       "recall": {
-        "ci_high": 1.0,
-        "ci_low": 1.0,
-        "value": 1.0
+        "ci_high": 0.8677,
+        "ci_low": 0.8004,
+        "value": 0.835
       },
       "skipped_resamples": 0,
-      "wrong_flags": 37434,
-      "wrong_flags_per_statement": 187.17
+      "wrong_flags": 507,
+      "wrong_flags_per_statement": 2.535
     }
   },
   "events": {
@@ -204,20 +204,401 @@
       "value": 0.5389
     },
     "unusual": {
-      "ci_high": -0.079,
-      "ci_low": -0.1193,
-      "value": -0.0992
+      "ci_high": 0.499,
+      "ci_low": 0.4342,
+      "value": 0.4663
     }
   },
   "failure_bar": {
     "failed_checks": [
       "recurring: precision 0.861 below 0.9",
       "duplicate: precision 0.1577 below 0.5",
-      "unusual: precision 0.0136 below 0.5",
-      "unusual: engine F1 minus baseline F1 interval does not lie above zero (ci_low -0.1193)",
-      "all flags: 193.505 wrong flags per statement, above 5"
+      "unusual: precision 0.4589 below 0.5",
+      "all flags: 8.87 wrong flags per statement, above 5"
     ],
-    "passed": false
+    "passed": false,
+    "wrong_flags_per_statement": 8.87
+  },
+  "first_run": {
+    "commit": "f532add",
+    "metrics": {
+      "baseline": {
+        "duplicate": {
+          "f1": {
+            "ci_high": 0.0061,
+            "ci_low": 0.0047,
+            "value": 0.0053
+          },
+          "hits": 206,
+          "misses": 0,
+          "precision": {
+            "ci_high": 0.0031,
+            "ci_low": 0.0023,
+            "value": 0.0027
+          },
+          "recall": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "value": 1.0
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 76705,
+          "wrong_flags_per_statement": 383.525
+        },
+        "price_increase": {
+          "f1": {
+            "ci_high": 0.2753,
+            "ci_low": 0.2116,
+            "value": 0.2439
+          },
+          "hits": 179,
+          "misses": 27,
+          "precision": {
+            "ci_high": 0.1626,
+            "ci_low": 0.1208,
+            "value": 0.1418
+          },
+          "recall": {
+            "ci_high": 0.9147,
+            "ci_low": 0.8191,
+            "value": 0.8689
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 1083,
+          "wrong_flags_per_statement": 5.415
+        },
+        "recurring": {
+          "f1": {
+            "ci_high": 0.3813,
+            "ci_low": 0.3543,
+            "value": 0.3683
+          },
+          "hits": 886,
+          "misses": 254,
+          "precision": {
+            "ci_high": 0.2511,
+            "ci_low": 0.2311,
+            "value": 0.2414
+          },
+          "recall": {
+            "ci_high": 0.7991,
+            "ci_low": 0.7538,
+            "value": 0.7772
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 2785,
+          "wrong_flags_per_statement": 13.925
+        },
+        "unusual": {
+          "f1": {
+            "ci_high": 0.1466,
+            "ci_low": 0.1054,
+            "value": 0.126
+          },
+          "hits": 234,
+          "misses": 281,
+          "precision": {
+            "ci_high": 0.0859,
+            "ci_low": 0.0608,
+            "value": 0.0731
+          },
+          "recall": {
+            "ci_high": 0.5176,
+            "ci_low": 0.3845,
+            "value": 0.4544
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 2966,
+          "wrong_flags_per_statement": 14.83
+        }
+      },
+      "engine": {
+        "duplicate": {
+          "f1": {
+            "ci_high": 0.2999,
+            "ci_low": 0.2447,
+            "value": 0.272
+          },
+          "hits": 204,
+          "misses": 2,
+          "precision": {
+            "ci_high": 0.1766,
+            "ci_low": 0.1397,
+            "value": 0.1577
+          },
+          "recall": {
+            "ci_high": 1.0,
+            "ci_low": 0.9752,
+            "value": 0.9903
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 1090,
+          "wrong_flags_per_statement": 5.45
+        },
+        "price_increase": {
+          "f1": {
+            "ci_high": 0.9827,
+            "ci_low": 0.9439,
+            "value": 0.9648
+          },
+          "hits": 192,
+          "misses": 14,
+          "precision": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "value": 1.0
+          },
+          "recall": {
+            "ci_high": 0.966,
+            "ci_low": 0.8937,
+            "value": 0.932
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 0,
+          "wrong_flags_per_statement": 0.0
+        },
+        "recurring": {
+          "f1": {
+            "ci_high": 0.9193,
+            "ci_low": 0.8941,
+            "value": 0.9072
+          },
+          "hits": 1096,
+          "misses": 47,
+          "precision": {
+            "ci_high": 0.8802,
+            "ci_low": 0.8408,
+            "value": 0.861
+          },
+          "recall": {
+            "ci_high": 0.9695,
+            "ci_low": 0.9467,
+            "value": 0.9588
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 177,
+          "wrong_flags_per_statement": 0.885
+        },
+        "unusual": {
+          "f1": {
+            "ci_high": 0.029,
+            "ci_low": 0.0248,
+            "value": 0.0268
+          },
+          "hits": 515,
+          "misses": 0,
+          "precision": {
+            "ci_high": 0.0147,
+            "ci_low": 0.0125,
+            "value": 0.0136
+          },
+          "recall": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "value": 1.0
+          },
+          "skipped_resamples": 0,
+          "wrong_flags": 37434,
+          "wrong_flags_per_statement": 187.17
+        }
+      },
+      "events": {
+        "duplicate": 206,
+        "duplicate_refunded": 103,
+        "price_increase": 206,
+        "recurring_fixed": 1140,
+        "recurring_variable": 200,
+        "unusual": 515
+      },
+      "f1_difference": {
+        "duplicate": {
+          "ci_high": 0.294,
+          "ci_low": 0.2399,
+          "value": 0.2667
+        },
+        "price_increase": {
+          "ci_high": 0.7573,
+          "ci_low": 0.6865,
+          "value": 0.721
+        },
+        "recurring": {
+          "ci_high": 0.5533,
+          "ci_low": 0.5241,
+          "value": 0.5389
+        },
+        "unusual": {
+          "ci_high": -0.079,
+          "ci_low": -0.1193,
+          "value": -0.0992
+        }
+      },
+      "failure_bar": {
+        "failed_checks": [
+          "recurring: precision 0.861 below 0.9",
+          "duplicate: precision 0.1577 below 0.5",
+          "unusual: precision 0.0136 below 0.5",
+          "unusual: engine F1 minus baseline F1 interval does not lie above zero (ci_low -0.1193)",
+          "all flags: 193.505 wrong flags per statement, above 5"
+        ],
+        "passed": false
+      },
+      "generator_version": "1",
+      "headline": {
+        "ci_high": 0.9695,
+        "ci_low": 0.9467,
+        "name": "engine.recurring.recall",
+        "value": 0.9588
+      },
+      "interval": {
+        "level": 0.95,
+        "method": "statement_bootstrap_percentile",
+        "resamples": 2000,
+        "seed": 4242
+      },
+      "secondary": {
+        "by_account_type": {
+          "chequing": {
+            "duplicate": {
+              "baseline": {
+                "precision": 0.0028,
+                "recall": 1.0
+              },
+              "engine": {
+                "precision": 0.1685,
+                "recall": 1.0
+              }
+            },
+            "price_increase": {
+              "baseline": {
+                "precision": 0.1275,
+                "recall": 0.8454
+              },
+              "engine": {
+                "precision": 1.0,
+                "recall": 0.9691
+              }
+            },
+            "recurring": {
+              "baseline": {
+                "precision": 0.2608,
+                "recall": 0.7929
+              },
+              "engine": {
+                "precision": 0.8818,
+                "recall": 0.9628
+              }
+            },
+            "unusual": {
+              "baseline": {
+                "precision": 0.0095,
+                "recall": 0.0573
+              },
+              "engine": {
+                "precision": 0.0135,
+                "recall": 1.0
+              }
+            }
+          },
+          "credit": {
+            "duplicate": {
+              "baseline": {
+                "precision": 0.0026,
+                "recall": 1.0
+              },
+              "engine": {
+                "precision": 0.1468,
+                "recall": 0.9794
+              }
+            },
+            "price_increase": {
+              "baseline": {
+                "precision": 0.1567,
+                "recall": 0.8899
+              },
+              "engine": {
+                "precision": 1.0,
+                "recall": 0.8991
+              }
+            },
+            "recurring": {
+              "baseline": {
+                "precision": 0.221,
+                "recall": 0.7586
+              },
+              "engine": {
+                "precision": 0.8372,
+                "recall": 0.954
+              }
+            },
+            "unusual": {
+              "baseline": {
+                "precision": 0.1357,
+                "recall": 0.8656
+              },
+              "engine": {
+                "precision": 0.0136,
+                "recall": 1.0
+              }
+            }
+          }
+        },
+        "recurring_hit_quality": {
+          "n_hits": 1093,
+          "right_active_status": 0.9899,
+          "right_period": 1.0,
+          "right_yearly_cost": 0.8783
+        },
+        "recurring_reference_word_recall": {
+          "events": 47,
+          "hits": 0,
+          "recall": 0.0
+        },
+        "recurring_variable_recall": {
+          "events": 200,
+          "hits": 3,
+          "recall": 0.015
+        },
+        "refunded_duplicates_flagged": {
+          "flagged_anyway": 0,
+          "total_refunded": 103
+        }
+      },
+      "stress": {
+        "duplicate": {
+          "events": 206,
+          "flags": 1346,
+          "hits": 206,
+          "precision": 0.153,
+          "recall": 1.0
+        },
+        "price_increase": {
+          "events": 164,
+          "flags": 107,
+          "hits": 105,
+          "precision": 0.9813,
+          "recall": 0.6402
+        },
+        "recurring": {
+          "events": 1131,
+          "flags": 870,
+          "hits": 680,
+          "precision": 0.7816,
+          "recall": 0.5959
+        },
+        "unusual": {
+          "events": 501,
+          "flags": 41127,
+          "hits": 501,
+          "precision": 0.0122,
+          "recall": 1.0
+        }
+      },
+      "test_seeds": {
+        "first": 1000,
+        "last": 1199,
+        "statements": 200
+      }
+    }
   },
   "generator_version": "1",
   "headline": {
@@ -271,8 +652,8 @@
             "recall": 0.0573
           },
           "engine": {
-            "precision": 0.0135,
-            "recall": 1.0
+            "precision": 0.4614,
+            "recall": 0.7977
           }
         }
       },
@@ -313,8 +694,8 @@
             "recall": 0.8656
           },
           "engine": {
-            "precision": 0.0136,
-            "recall": 1.0
+            "precision": 0.4566,
+            "recall": 0.8735
           }
         }
       }
@@ -364,10 +745,10 @@
     },
     "unusual": {
       "events": 501,
-      "flags": 41127,
-      "hits": 501,
-      "precision": 0.0122,
-      "recall": 1.0
+      "flags": 1106,
+      "hits": 299,
+      "precision": 0.2703,
+      "recall": 0.5968
     }
   },
   "test_seeds": {
