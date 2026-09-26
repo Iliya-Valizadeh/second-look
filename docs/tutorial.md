@@ -23,9 +23,21 @@ make setup
 make demo
 ```
 
-TODO: say what the reader should see when the demo finishes.
+The demo runs the command line on a small, made-up statement
+(`tests/fixtures/synthetic_demo_statement.csv`). It prints a note that the statement
+is made up, then the list of charges worth a second look, then a line saying how many
+rows it read, and the tool's not-financial-advice footer. No file is downloaded and no
+key is needed.
 
-Until you replace the template example, the demo makes a small synthetic dataset. It
-fits a [baseline](glossary.md#baseline) and a linear model. Then it prints the
-[mean absolute error](glossary.md#mean-absolute-error) of each one on the test rows,
-with a [confidence interval](glossary.md#confidence-interval).
+## Step 4: run it on your own statement
+
+```bash
+uv run second-look your-statement.csv \
+  --date-column Date --description-column Description \
+  --amount-column Amount --sign-convention charges-negative
+```
+
+Change the column names to match your file's header row, and add `--category-column`
+if your export has one. See [the reference page](reference.md#command-line-flags) for
+every flag, including separate debit and credit columns. Add `--json` to get the same
+result as JSON instead of plain text.
