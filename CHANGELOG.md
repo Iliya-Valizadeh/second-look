@@ -8,6 +8,11 @@ git tag.
 
 ### Added
 
+- The tool went public and live: `iliya-valizadeh.github.io/second-look`. A Lighthouse
+  run against the live page scored 100 for performance and 100 for accessibility
+  (mobile setting, first screen only; see `docs/whats_weak.md` for what that
+  doesn't cover), matching the earlier local run.
+
 - Project skeleton generated from `ds-project-standard`.
 - Detection rules for the data model, the merchant-name cleaner, the CSV importer,
   recurring charges and price increases (ADR 0002, ADR 0003).
