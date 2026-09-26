@@ -100,7 +100,7 @@ nothing.
 
 | # | Test | Score | Evidence or gap |
 |---|---|---|---|
-| 1 | Dependency changes result in notification | none | Packages are pinned in `uv.lock`, and Pyodide by version and hash. Nothing reports new releases |
+| 1 | Dependency changes result in notification | none | Packages are pinned in `uv.lock`, and [Pyodide](glossary.md#pyodide) by version and hash. Nothing reports new releases |
 | 2 | Data invariants hold for inputs | half | Each time someone runs the tool, the importer checks every row of their file and lists each skipped row with its reason. It never picks between month-first and day-first dates on its own. CI tests this behaviour. Nothing checks ranges, and no one but the user sees the result |
 | 3 | Training and serving are not skewed | half | Both doors run the same Python package ([ADR 0001](decisions/0001-one-engine-two-doors.md)). The browser test checks that the page shows the flags `make demo` prints, on the demo statement only. The expected flag text was copied from the command line output by hand |
 | 4 | Models are not too stale | none | Not measured |

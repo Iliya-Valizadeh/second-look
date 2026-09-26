@@ -16,6 +16,31 @@ git tag.
   or JSON output (ADR 0001).
 - `make demo`, which runs the command line on a small, committed, made-up statement.
 - A test that fails if any reason string, title or label uses a word ADR 0005 bans.
+- The evaluation plan, committed before any evaluation code or result
+  (`docs/eval_plan.md`), the synthetic statement generator and its data tests, the
+  baselines for each flag type, and `reports/metrics.json` with a
+  [bootstrap](docs/glossary.md#bootstrap)
+  [confidence interval](docs/glossary.md#confidence-interval) for every metric.
+- An error analysis script (`make error-analysis`) that sorts every wrong flag and
+  missed event on the test seeds by cause, and `reports/error_analysis.md`, which reads
+  it in plain words.
+- `docs/whats_weak.md`, ranking every known limit by how much it would change the
+  tool's usefulness on real statements.
+- `DATASHEET.md`, describing the synthetic statement dataset.
+- `docs/ml_test_score.md`, scoring the repo against Breck et al.'s ML Test Score.
+- Door 2, the static web page that runs `second_look` in the browser through
+  [Pyodide](docs/glossary.md#pyodide), with a column-mapping screen, a
+  [Content-Security-Policy](docs/glossary.md#content-security-policy-csp), and a
+  local-only feedback export (ADR 0004, ADR 0005).
+- A headless-browser test (Playwright) that fails the build if the web page makes any
+  network request outside a fixed list of the site's own files.
+- A check of the five named Canadian banks' own help pages for a confirmed CSV preset;
+  none was found (`docs/reference.md`, `docs/whats_weak.md`).
+- A Lighthouse run of the web page, wired into `reports/metrics.json`
+  (`make lighthouse`).
+- Diátaxis docs: `docs/tutorial.md`, `docs/how-to/`, `docs/reference.md` and
+  `docs/explanation.md`, and a README rewritten to the project's house-standard
+  section order.
 
 ### Changed
 
@@ -30,3 +55,8 @@ git tag.
   coffee order bought often was flagged as a possible double charge.
 - `reports/metrics.json` keeps the first test run under `first_run`, and its failure
   bar now also gives the wrong flags per statement as a number.
+- Pyodide now loads only after the user picks a file, not on page load, so the first
+  page load stays small.
+- `docs/eval_plan.md` gained a dated correction: the demo statement was never generator
+  output at seed `9000`, and the generator's `dump_dir` argument was never built as a
+  `--dump` command-line flag. Neither claim affected any reported number.

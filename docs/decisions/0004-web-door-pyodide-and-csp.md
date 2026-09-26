@@ -5,10 +5,11 @@ Date: 2026-09-25. Status: accepted.
 ## Context
 
 Door 2 is a static page on GitHub Pages. It runs the `second_look` package in the
-browser through Pyodide, so a statement never has to leave the user's computer. The
-page makes a promise: nothing leaves your browser. This record decides how the page
-gets Pyodide, which Content-Security-Policy (CSP) it sets, and how the promise is
-checked.
+browser through [Pyodide](../glossary.md#pyodide), so a statement never has to leave
+the user's computer. The page makes a promise: nothing leaves your browser. This
+record decides how the page gets Pyodide, which
+[Content-Security-Policy (CSP)](../glossary.md#content-security-policy-csp) it sets,
+and how the promise is checked.
 
 Facts checked on 2026-09-25:
 
