@@ -35,6 +35,11 @@ from .generator import GENERATOR_VERSION, generate_statement
 REPO_ROOT = Path(__file__).resolve().parent.parent
 METRICS_PATH = REPO_ROOT / "reports" / "metrics.json"
 FIGURE_PATH = REPO_ROOT / "reports" / "figures" / "headline.png"
+FIRST_RUN_PATH = REPO_ROOT / "reports" / "metrics_first_run.json"
+FIRST_RUN_COMMIT = "f532add"
+"""The commit whose `reports/metrics.json` was the first test run. The eval plan's freeze
+rule says that run is always reported, so `run()` copies it, unchanged, into the
+`first_run` key of every later result. `FIRST_RUN_PATH` is that file, byte for byte."""
 
 TEST_SEED_FIRST = 1000
 TEST_SEED_LAST = 1199
@@ -260,7 +265,11 @@ def _failure_bar(
             f"all flags: {round(total_wrong_per_statement, 4)} wrong flags per statement, above 5"
         )
 
-    return {"passed": len(failed) == 0, "failed_checks": failed}
+    return {
+        "passed": len(failed) == 0,
+        "failed_checks": failed,
+        "wrong_flags_per_statement": round(total_wrong_per_statement, 4),
+    }
 
 
 def _round_floats(obj: Any) -> Any:
@@ -365,6 +374,10 @@ def run() -> dict[str, Any]:
         "stress": stress,
         "headline": headline,
         "failure_bar": failure_bar,
+        "first_run": {
+            "commit": FIRST_RUN_COMMIT,
+            "metrics": json.loads(FIRST_RUN_PATH.read_text(encoding="utf-8")),
+        },
     }
     rounded: dict[str, Any] = _round_floats(result)
     return rounded
