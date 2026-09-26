@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>second-look</title>
+<meta name="description" content="Finds recurring charges, price rises, duplicates and odd spending in your browser. Nothing you open here leaves your browser.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <h1>second&#8209;look</h1>
+  <p class="tagline">Finds recurring charges, price rises, duplicates and odd spending in a bank or card statement.</p>
+</header>
+
+<main id="main">
+
+  <section id="privacy" aria-labelledby="privacy-heading">
+    <h2 id="privacy-heading">Nothing leaves your browser</h2>
+    <p>
+      This page reads the file you choose on your own device and runs the same
+      <code>second-look</code> Python package inside your browser, using
+      <a href="https://pyodide.org/" rel="noopener">Pyodide</a>. No statement, row or
+      byte of it is ever sent anywhere. There is no upload button and no server that
+      could receive one.
+    </p>
+    <details>
+      <summary>How this page proves it, not just says it</summary>
+      <ul>
+        <li>
+          The Content-Security-Policy this page sets blocks any request this page's
+          own code could try to make to another origin. Its exact, current value:
+          <pre><code id="csp-value">(reading the page's own policy&hellip;)</code></pre>
+        </li>
+        <li>
+          A test in this project's continuous integration loads this page, runs it
+          against a made-up statement, and fails the build if the page makes any
+          request to another origin, a request that is not a plain <code>GET</code>,
+          or a request outside a fixed list of this site's own files.
+        </li>
+        <li>
+          The source code for this page and for the exact rules it runs is public:
+          <a href="https://github.com/Iliya-Valizadeh/second-look" rel="noopener">github.com/Iliya-Valizadeh/second-look</a>.
+        </li>
+      </ul>
+    </details>
+  </section>
+
+  <p id="status" role="status" aria-live="polite">Starting Python&hellip;</p>
+
+  <section id="screen-picker" aria-labelledby="picker-heading">
+    <h2 id="picker-heading">1. Choose a statement</h2>
+    <div id="drop-zone" tabindex="0" role="button" aria-describedby="drop-zone-help">
+      <p>Drop a CSV file here, or press Enter to choose a file.</p>
+    </div>
+    <p id="drop-zone-help" class="hint">
+      Only a CSV export of a bank or card statement. The file stays on this device.
+    </p>
+    <div class="field">
+      <label for="file-input">Or choose a file directly</label>
+      <input type="file" id="file-input" accept=".csv,text/csv">
+    </div>
+    <p id="picker-error" class="error" role="alert" hidden></p>
+  </section>
+
+  <section id="screen-mapping" hidden aria-labelledby="mapping-heading">
+    <h2 id="mapping-heading">2. Tell it which column is which</h2>
+    <p class="hint">
+      No bank format is guessed. Check the preview below and match each column
+      yourself. Learn more in
+      <a href="https://github.com/Iliya-Valizadeh/second-look/blob/main/docs/decisions/0003-importing-statements.md" rel="noopener">how importing works</a>.
+    </p>
+
+    <table id="preview-table">
+      <caption>First rows of your file, as read</caption>
+      <thead><tr id="preview-head"></tr></thead>
+      <tbody id="preview-body"></tbody>
+    </table>
+
+    <form id="mapping-form">
+      <div class="field">
+        <input type="checkbox" id="has-header" checked>
+        <label for="has-header">The first row is a header row</label>
+      </div>
+
+      <div class="field">
+        <label for="date-column">Date column</label>
+        <select id="date-column" required></select>
+      </div>
+
+      <div class="field">
+        <label for="date-format">Date format</label>
+        <select id="date-format" required>
+          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+        </select>
+      </div>
+
+      <fieldset id="description-columns-fieldset">
+        <legend>Description column(s) &mdash; check at least one</legend>
+        <div id="description-columns"></div>
+      </fieldset>
+
+      <div class="field">
+        <label for="category-column">Category column (optional)</label>
+        <select id="category-column"></select>
+      </div>
+
+      <fieldset>
+        <legend>How is the amount stored?</legend>
+        <div class="field">
+          <input type="radio" name="amount-shape" id="amount-shape-single" value="single" checked>
+          <label for="amount-shape-single">One column, with a sign</label>
+        </div>
+        <div class="field">
+          <input type="radio" name="amount-shape" id="amount-shape-split" value="split">
+          <label for="amount-shape-split">Separate debit and credit columns</label>
+        </div>
+      </fieldset>
+
+      <div id="amount-single-fields">
+        <div class="field">
+          <label for="amount-column">Amount column</label>
+          <select id="amount-column"></select>
+        </div>
+        <fieldset>
+          <legend>Which sign means money leaving the account?</legend>
+          <div class="field">
+            <input type="radio" name="sign-convention" id="sign-negative" value="charges_negative" checked>
+            <label for="sign-negative">Charges are negative (a $12.00 charge shows as -12.00)</label>
+          </div>
+          <div class="field">
+            <input type="radio" name="sign-convention" id="sign-positive" value="charges_positive">
+            <label for="sign-positive">Charges are positive (a $12.00 charge shows as 12.00)</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="amount-split-fields" hidden>
+        <div class="field">
+          <label for="debit-column">Debit column (money leaving)</label>
+          <select id="debit-column"></select>
+        </div>
+        <div class="field">
+          <label for="credit-column">Credit column (money coming in)</label>
+          <select id="credit-column"></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="decimal-separator">Decimal separator</label>
+        <select id="decimal-separator">
+          <option value=".">Point (12.34)</option>
+          <option value=",">Comma (12,34)</option>
+        </select>
+      </div>
+
+      <p id="mapping-error" class="error" role="alert" hidden></p>
+
+      <div class="actions">
+        <button type="button" id="mapping-back">Choose a different file</button>
+        <button type="submit" id="mapping-submit">Show results</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="screen-results" hidden aria-labelledby="results-heading">
+    <h2 id="results-heading">3. Worth a second look</h2>
+    <p id="results-summary"></p>
+    <p id="results-empty" hidden>Nothing worth a second look in this statement.</p>
+
+    <ol id="results-list" class="results-list"></ol>
+
+    <section id="feedback-export" aria-labelledby="feedback-heading">
+      <h3 id="feedback-heading">Save your feedback</h3>
+      <p class="hint">
+        Mark any flag above as right, wrong or not sure, then save a file to your own
+        device. Nothing is sent anywhere; the button below only creates a local
+        download. Sharing the file afterwards, for example in a GitHub issue, is
+        always your choice.
+      </p>
+      <div class="field">
+        <input type="checkbox" id="include-merchant-names">
+        <label for="include-merchant-names">Include merchant names in the saved file</label>
+      </div>
+      <button type="button" id="save-feedback">Save my feedback</button>
+      <p id="feedback-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="actions">
+      <button type="button" id="results-back">Check another statement</button>
+    </div>
+  </section>
+
+  <footer>
+    <p id="not-advice-footer">
+      This tool points out charges you may want to look at again. It is not financial
+      advice. It cannot tell whether a charge is right or wrong. Only you, the
+      merchant or your bank can.
+    </p>
+  </footer>
+
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

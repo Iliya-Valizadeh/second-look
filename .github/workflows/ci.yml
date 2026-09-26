@@ -33,6 +33,22 @@ jobs:
       - name: Demo runs with no downloads or keys
         run: make demo
 
+  web-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+          enable-cache: true
+
+      - name: Install pinned packages
+        run: uv sync --locked
+
+      - name: Build the web door and run its headless-browser test (Playwright)
+        run: make web-test
+
   web-links:
     runs-on: ubuntu-latest
     steps:
