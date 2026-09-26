@@ -23,14 +23,31 @@ Facts to look up: commands, files and settings.
 
 ## Package
 
-The template ships a small worked example. Replace these modules with your own and
-update this table.
-
 | Module | What it does |
 |---|---|
-| `data.py` | Makes a seeded synthetic dataset and splits it into train and test rows |
-| `models.py` | A [baseline](glossary.md#baseline) that predicts the training mean, and a linear model |
-| `metrics.py` | [Mean absolute error](glossary.md#mean-absolute-error) with a [bootstrap](glossary.md#bootstrap) [confidence interval](glossary.md#confidence-interval) |
-| `plots.py` | Draws the headline chart |
-| `evaluate.py` | Runs the evaluation for `make eval` and writes the files above |
-| `demo.py` | Runs the same evaluation for `make demo` and prints it, with no files written |
+| `models.py` | The data classes every other module shares: transactions, the column mapping and the four kinds of flag |
+| `thresholds.py` | Every number the detection rules use, named and explained ([ADR 0002](decisions/0002-detection-rules-and-thresholds.md)) |
+| `merchant.py` | Cleans a description into a merchant key for grouping |
+| `importer.py` | Turns already-split CSV rows into normalized transactions ([ADR 0003](decisions/0003-importing-statements.md)) |
+| `recurring.py` | Finds recurring charges and price increases on them |
+| `duplicate.py` | Finds possible duplicate charges |
+| `unusual.py` | Finds charges that stand out against the user's own history |
+| `cli.py` | Door 1: the `second-look` command. The only module that reads a file or prints ([ADR 0001](decisions/0001-one-engine-two-doors.md)) |
+| `demo.py` | Runs `cli.py` on the committed synthetic statement for `make demo` |
+
+## Command line flags
+
+| Flag | What it sets |
+|---|---|
+| `--json` | Print the flags as JSON instead of plain text |
+| `--no-header` | The file has no header row; columns are then given by position, starting at `0` |
+| `--date-column`, `--date-format` | The date column, and its format (`YYYY-MM-DD`, `MM/DD/YYYY` or `DD/MM/YYYY`) |
+| `--description-column` | A description column; give it more than once to join several columns |
+| `--category-column` | An optional category column |
+| `--amount-column`, `--sign-convention` | One signed amount column, and which sign means a charge |
+| `--debit-column`, `--credit-column` | Separate debit and credit columns, instead of a signed one |
+| `--decimal-separator` | `.` or `,` |
+| `--delimiter` | The CSV delimiter; sniffed from the file when not given |
+
+Give either `--amount-column` with `--sign-convention`, or both `--debit-column` and
+`--credit-column`, matching the column mapping in [ADR 0003](decisions/0003-importing-statements.md).
