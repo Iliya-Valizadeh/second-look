@@ -118,3 +118,20 @@ unconfirmed goes in `docs/whats_weak.md` as wanted.
 
 Guessing columns and signs from the data was not chosen, because a wrong guess gives
 confident but wrong flags with no error to warn the user.
+
+## Update, 2026-09-26: what was not built
+
+This note was added in the review pass before release. The decision above stands, but
+three parts of it were not built:
+
+- The importer does not list the date formats that read every row. The user picks the
+  format, and both doors default to `YYYY-MM-DD`.
+- The web page shows the first rows as they are in the file, not as parsed. It also
+  starts with "Charges are negative" already chosen, although this record says the sign
+  is never pre-filled.
+- The command line has no mapping file and no option to print the parsed first rows.
+
+So a wrong sign choice is not made visible before any flag is computed, as the
+Consequences above expect. It gives an empty result with no warning. The consequence
+"Any bank's CSV works from the first release" also claims more than was tested: no
+real bank export has been tried. [docs/whats_weak.md](../whats_weak.md) lists this.

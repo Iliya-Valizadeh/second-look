@@ -20,10 +20,12 @@ flag then names them by position, starting at `0`.
 
 ## 2. Find the date column and its format
 
-Look at one date value. If the day is above `12` in any row, you can already tell
-whether the file is day-first or month-first. If not, second-look's importer lists
-every format that would parse every row, and asks you to choose when more than one
-does. The three formats it understands are `YYYY-MM-DD`, `MM/DD/YYYY` and `DD/MM/YYYY`.
+Look at the date values. The three formats second-look understands are `YYYY-MM-DD`,
+`MM/DD/YYYY` and `DD/MM/YYYY`. You choose one; the tool does not suggest a format, and
+`YYYY-MM-DD` is the default. If the day is above `12` in any row, you can tell whether
+the file is day-first or month-first. If every day is `12` or lower, both read every
+row, and a wrong choice gives wrong dates with no message. Check the bank's help page
+or a date you remember.
 
 ## 3. Find the description column
 
@@ -61,11 +63,14 @@ uv run second-look your-statement.csv \
   --amount-column Amount --sign-convention charges-negative
 ```
 
-Read the summary line first: rows read, rows used, and any skipped rows with a reason.
-A wrong sign convention does not crash the tool; it silently turns every charge into a
-refund. Check that the yearly costs and reasons on the flags make sense before trusting
-them. On the web page, the preview table on the mapping screen shows the same thing
-before you press "Show results".
+Read the summary line first: rows read (the header row counts), rows used, and any
+skipped rows with a reason. A wrong sign convention does not crash the tool, and the
+summary does not show it. It silently turns every charge into money coming in, and the
+tool then finds nothing. So if a statement you expected flags for shows none, check the
+sign first. Check that the yearly costs and reasons on the flags make sense before
+trusting them. On the web page, the preview table shows your file's first rows as they
+are in the file, not as the tool reads them. Use it to find a purchase and check its
+sign before you press "Show results".
 
 ## If you have a bank's own header row
 
