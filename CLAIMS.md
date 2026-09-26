@@ -30,8 +30,9 @@ one line by hand, add the comment `<!-- not-a-claim -->` to it.
 | Failure bar: duplicate and unusual precision | 0.50 | `evaluation/evaluate.py` | none (a constant in the code) |
 | Generator transit fare | $3.35 | `evaluation/generator.py` | none (a constant in the code) |
 | Generator coffee prices | $2.45 to $5.95 | `evaluation/merchants.py` | none (a constant in the code) |
-| Recurring precision | 0.861 | `reports/metrics.json#engine.recurring.precision` | `make eval` |
-| Recurring recall | 0.9588 | `reports/metrics.json#engine.recurring.recall` | `make eval` |
+| Recurring precision | 0.861 (0.8408 to 0.8802) | `reports/metrics.json#engine.recurring.precision` | `make eval` |
+| Recurring recall | 0.9588 (0.9467 to 0.9695) | `reports/metrics.json#engine.recurring.recall` | `make eval` |
+| Baseline recurring precision and recall | 0.2414, 0.7772 | `reports/metrics.json#baseline.recurring` | `make eval` |
 | Recurring wrong flags and misses | 177, 47 | `reports/metrics.json#engine.recurring` | `make eval` |
 | Price increase precision, recall and misses | 1.0, 0.932, 14 | `reports/metrics.json#engine.price_increase` | `make eval` |
 | Unusual wrong flags and misses | 507, 85 | `reports/metrics.json#engine.unusual` | `make eval` |
