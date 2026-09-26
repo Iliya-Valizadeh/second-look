@@ -12,6 +12,11 @@ or right inside your browser.
 
 ## Try it
 
+Live, in your browser, nothing uploaded:
+[iliya-valizadeh.github.io/second-look](https://iliya-valizadeh.github.io/second-look/)
+
+Or the command line:
+
 ```bash
 git clone https://github.com/Iliya-Valizadeh/second-look.git && cd second-look
 make setup

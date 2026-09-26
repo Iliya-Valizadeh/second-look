@@ -25,7 +25,8 @@ Facts to look up: commands, files and settings.
 | `reports/metrics.json` | The headline numbers, read by `CLAIMS.md` and the portfolio site |
 | `reports/figures/headline.png` | The headline chart that `make eval` draws |
 | `reports/error_analysis.json` | The counts by cause that `make error-analysis` writes |
-| `reports/lighthouse/report.json` | The last Lighthouse report that `make lighthouse` wrote |
+| `reports/lighthouse/report.json` | The last Lighthouse report that `make lighthouse` wrote, served locally |
+| `reports/lighthouse/live_report.json` | A Lighthouse report run against the live page (`iliya-valizadeh.github.io/second-look`) after the v1.0 deploy, by hand, once |
 
 ## Package
 
