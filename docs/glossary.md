@@ -18,7 +18,20 @@ with repeats allowed, and compute the number again on each one.
 A range around a measured number that shows how much the number could move if the
 test were run again on new data.
 
+## F1 score
+
+One score that combines precision and recall. It is high only when both are high.
+
 ## Mean absolute error
 
 The average size of a miss, in the same units as the thing being predicted. Lower is
 better.
+
+## Precision
+
+Of all the flags a method raises, the share that point at something real. High
+precision means few wrong flags.
+
+## Recall
+
+Of all the real cases, the share a method finds. High recall means few misses.
