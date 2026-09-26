@@ -1,6 +1,6 @@
 [project]
 name = "second-look"
-version = "0.1.0"
+version = "1.0.0"
 description = "Finds recurring charges, price rises, duplicates and odd spending in your browser"
 readme = "README.md"
 license = "MIT"
