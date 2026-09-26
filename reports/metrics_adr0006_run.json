@@ -92,16 +92,16 @@
   "engine": {
     "duplicate": {
       "f1": {
-        "ci_high": 0.996,
-        "ci_low": 0.9714,
-        "value": 0.9855
+        "ci_high": 0.2999,
+        "ci_low": 0.2447,
+        "value": 0.272
       },
       "hits": 204,
       "misses": 2,
       "precision": {
-        "ci_high": 1.0,
-        "ci_low": 0.9563,
-        "value": 0.9808
+        "ci_high": 0.1766,
+        "ci_low": 0.1397,
+        "value": 0.1577
       },
       "recall": {
         "ci_high": 1.0,
@@ -109,8 +109,8 @@
         "value": 0.9903
       },
       "skipped_resamples": 0,
-      "wrong_flags": 4,
-      "wrong_flags_per_statement": 0.02
+      "wrong_flags": 1090,
+      "wrong_flags_per_statement": 5.45
     },
     "price_increase": {
       "f1": {
@@ -189,9 +189,9 @@
   },
   "f1_difference": {
     "duplicate": {
-      "ci_high": 0.9901,
-      "ci_low": 0.9663,
-      "value": 0.9802
+      "ci_high": 0.294,
+      "ci_low": 0.2399,
+      "value": 0.2667
     },
     "price_increase": {
       "ci_high": 0.7573,
@@ -212,10 +212,12 @@
   "failure_bar": {
     "failed_checks": [
       "recurring: precision 0.861 below 0.9",
-      "unusual: precision 0.4589 below 0.5"
+      "duplicate: precision 0.1577 below 0.5",
+      "unusual: precision 0.4589 below 0.5",
+      "all flags: 8.87 wrong flags per statement, above 5"
     ],
     "passed": false,
-    "wrong_flags_per_statement": 3.44
+    "wrong_flags_per_statement": 8.87
   },
   "first_run": {
     "commit": "f532add",
@@ -620,7 +622,7 @@
             "recall": 1.0
           },
           "engine": {
-            "precision": 1.0,
+            "precision": 0.1685,
             "recall": 1.0
           }
         },
@@ -662,7 +664,7 @@
             "recall": 1.0
           },
           "engine": {
-            "precision": 0.9596,
+            "precision": 0.1468,
             "recall": 0.9794
           }
         },
@@ -722,9 +724,9 @@
   "stress": {
     "duplicate": {
       "events": 206,
-      "flags": 210,
+      "flags": 1346,
       "hits": 206,
-      "precision": 0.981,
+      "precision": 0.153,
       "recall": 1.0
     },
     "price_increase": {
