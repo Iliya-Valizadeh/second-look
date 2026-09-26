@@ -51,3 +51,24 @@ Facts to look up: commands, files and settings.
 
 Give either `--amount-column` with `--sign-convention`, or both `--debit-column` and
 `--credit-column`, matching the column mapping in [ADR 0003](decisions/0003-importing-statements.md).
+
+## Bank CSV presets
+
+[ADR 0003](decisions/0003-importing-statements.md) allows a named preset only when a
+bank's own help page shows the exact CSV header row, or Iliya provides a real header row
+from his own export. Checked on 2026-09-26, on each bank's own site only (never a
+third-party page): no preset is confirmed for any of the five banks named in the plan.
+Each bank's own site confirms that a CSV export exists, but none of these pages shows the
+literal column header text.
+
+| Bank | Checked, own-site page | What it shows |
+|---|---|---|
+| RBC | rbc.com help pages | Confirms CSV/Quicken export exists; no column header list |
+| TD | td.com/ca/en/commercial-banking/wbb/help/wbwwpmyreports | Confirms CSV/BAI/tab-delimited export; no column header list |
+| CIBC | cibc.com and us.cibc.com "how to" pages on downloading transactions | Confirms CSV/QFX/Excel export choices; no column header list |
+| BMO | bmo.com/olbb/help-centre account-details page | Confirms CSV/Quicken/QuickBooks export; no column header list |
+| Scotiabank | ScotiaConnect help, account_statement_advanced_file_exports.htm | Confirms CSV export with an "Include Headings" option; explicitly does not list header names |
+
+All five stay unconfirmed. See `docs/whats_weak.md` for what a confirmed preset would
+change. A future preset needs either a link to a bank page that shows the literal header
+row, or a real header row (header only, no transactions) from Iliya.
