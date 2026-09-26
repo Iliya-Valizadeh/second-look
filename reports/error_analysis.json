@@ -1,0 +1,219 @@
+{
+  "duplicate": {
+    "misses_by_cause": {
+      "a refund of the same amount follows (the generator refunded a shopping charge)": 2
+    },
+    "wrong_by_source": {
+      "background:coffee": 3,
+      "background:pharmacy": 1
+    }
+  },
+  "price_increase": {
+    "misses_by_cause": {
+      "series split into separate recurring flags": 14
+    },
+    "misses_by_new_price_charges": {
+      "10": 1,
+      "11": 1,
+      "26": 1,
+      "3": 1,
+      "4": 3,
+      "5": 3,
+      "58": 1,
+      "7": 1,
+      "8": 1,
+      "9": 1
+    },
+    "misses_by_period": {
+      "monthly": 12,
+      "weekly": 2
+    },
+    "misses_foreign_currency": 2,
+    "misses_new_price_charges_range": {
+      "max": 58,
+      "min": 3
+    },
+    "misses_with_one_off_extra_before_new_price": 14,
+    "wrong_flags": 0
+  },
+  "recurring": {
+    "background_monthly_distinct_amounts": {
+      "one amount": 4,
+      "several close amounts": 19
+    },
+    "hit_quality_detail": {
+      "active_right_cost": 960,
+      "fixed_hits": 1093,
+      "stopped_right_status": 122,
+      "wrong_active_status": 11
+    },
+    "misses_by_cause": {
+      "reference word in the description (ADR 0002 says these do not group)": 47
+    },
+    "wrong_by_active": {
+      "active": 134,
+      "stopped": 43
+    },
+    "wrong_by_charge_count": {
+      "2": 116,
+      "3": 42,
+      "4": 8,
+      "5": 4,
+      "6+": 7
+    },
+    "wrong_by_period": {
+      "monthly": 59,
+      "weekly": 2,
+      "yearly": 116
+    },
+    "wrong_by_source": {
+      "background:coffee": 4,
+      "background:entertainment": 3,
+      "background:fuel": 15,
+      "background:groceries": 53,
+      "background:pharmacy": 12,
+      "background:restaurants": 31,
+      "background:shopping": 14,
+      "recurring:fixed": 14,
+      "recurring:variable": 31
+    },
+    "wrong_by_source_group_and_period": {
+      "background:monthly": 23,
+      "background:yearly": 109,
+      "recurring:fixed:monthly": 12,
+      "recurring:fixed:weekly": 2,
+      "recurring:variable:monthly": 24,
+      "recurring:variable:yearly": 7
+    },
+    "wrong_fixed_fragments": {
+      "part of a series with a planted price increase": 14
+    }
+  },
+  "test_seeds": {
+    "first": 1000,
+    "last": 1199,
+    "statements": 200
+  },
+  "unusual": {
+    "charges_eligible": 178433,
+    "charges_scored_per_merchant": 170769,
+    "derived": {
+      "charges_scored_per_merchant_per_statement": 853.845,
+      "merchant_score_wrong_share_of_scored_charges": 0.0026,
+      "spike_recall_by_account": {
+        "chequing": 0.6994,
+        "credit": 0.7975
+      },
+      "spike_recall_by_factor": {
+        "3x to 5x": 0.4783,
+        "5x to 10x": 0.8494
+      },
+      "wrong_flags_with_merchant_score": 442
+    },
+    "events_by_kind": {
+      "large_new_merchant": 184,
+      "spike_known_merchant": 331
+    },
+    "events_by_kind_and_account": {
+      "large_new_merchant:chequing": 89,
+      "large_new_merchant:credit": 95,
+      "spike_known_merchant:chequing": 173,
+      "spike_known_merchant:credit": 158
+    },
+    "hits_by_kind_and_account": {
+      "large_new_merchant:chequing": 88,
+      "large_new_merchant:credit": 95,
+      "spike_known_merchant:chequing": 121,
+      "spike_known_merchant:credit": 126
+    },
+    "hits_by_rule": {
+      "category_score": 14,
+      "category_score+new_merchant": 9,
+      "category_score+new_merchant+very_large": 35,
+      "category_score+very_large": 2,
+      "merchant_score": 118,
+      "merchant_score+category_score": 69,
+      "merchant_score+category_score+very_large": 19,
+      "merchant_score+very_large": 19,
+      "new_merchant": 68,
+      "new_merchant+very_large": 71,
+      "very_large": 6
+    },
+    "misses_by_cause": {
+      "large_new_merchant: under 3x the typical charge": 1,
+      "spike_known_merchant: merchant test score at or below 3.5; category test no category column": 52,
+      "spike_known_merchant: merchant test score at or below 3.5; category test score at or below 3.5": 32
+    },
+    "misses_by_kind": {
+      "large_new_merchant": 1,
+      "spike_known_merchant": 84
+    },
+    "new_merchant_miss_ratio_to_typical": {
+      "count": 1,
+      "max": 2.9738,
+      "median": 2.9738
+    },
+    "spike_hits_by_factor": {
+      "3x to 5x": 44,
+      "5x to 10x": 203
+    },
+    "spike_misses_by_category": {
+      "entertainment": 8,
+      "fuel": 2,
+      "groceries": 20,
+      "pharmacy": 10,
+      "restaurants": 27,
+      "shopping": 17
+    },
+    "spike_misses_by_factor": {
+      "3x to 5x": 48,
+      "5x to 10x": 36
+    },
+    "wrong_by_account_type": {
+      "chequing": 244,
+      "credit": 263
+    },
+    "wrong_by_charge": {
+      "background:entertainment": 39,
+      "background:fuel": 18,
+      "background:groceries": 115,
+      "background:pharmacy": 57,
+      "background:restaurants": 125,
+      "background:shopping": 145,
+      "decoy:one_off_extra": 4,
+      "duplicate_copy": 4
+    },
+    "wrong_by_rule": {
+      "category_score": 33,
+      "merchant_score": 409,
+      "merchant_score+category_score": 30,
+      "merchant_score+very_large": 3,
+      "new_merchant": 32
+    },
+    "wrong_category_score_by_charge": {
+      "background:entertainment": 4,
+      "background:fuel": 1,
+      "background:groceries": 7,
+      "background:pharmacy": 5,
+      "background:restaurants": 8,
+      "background:shopping": 4,
+      "decoy:one_off_extra": 4
+    },
+    "wrong_merchant_score_by_history": {
+      "10 to 19": 125,
+      "20+": 55,
+      "5 to 9": 229
+    },
+    "wrong_merchant_score_by_ratio": {
+      "10x or more": 4,
+      "2x to 3x": 183,
+      "3x to 5x": 164,
+      "5x to 10x": 58
+    },
+    "wrong_new_merchant_by_charge": {
+      "background:groceries": 4,
+      "background:restaurants": 4,
+      "background:shopping": 24
+    }
+  }
+}
