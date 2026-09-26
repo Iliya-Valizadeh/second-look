@@ -20,7 +20,7 @@ causes are explained in [reports/error_analysis.md](../reports/error_analysis.md
 | 6 | Real double charges at a price paid often are skipped | Accepted in ADR 0007 as the cost of the fix |
 | 7 | A one-off extra charge hides a price increase | Cause found. Nothing changed yet |
 | 8 | The fixes were chosen after seeing the failed test run | Choices made on the tuning seeds only. The comparisons are not committed |
-| 9 | Web page limits: one browser tested, Content-Security-Policy gaps | Written in ADR 0004 |
+| 9 | Web page limits: one browser tested, [Content-Security-Policy](glossary.md#content-security-policy-csp) gaps | Written in ADR 0004 |
 | 10 | No confirmed bank presets | Each bank's own help pages checked. None found |
 
 ## 1. Tested on synthetic statements only
@@ -166,7 +166,8 @@ From [ADR 0004](decisions/0004-web-door-pyodide-and-csp.md):
 - Browser extensions the user installed run outside the policy.
 
 Also, CI runs the Python tests on Python `3.11` only. The core must also run on the
-Python `3.14` inside Pyodide. Only the browser test, on the demo statement, checks that.
+Python `3.14` inside [Pyodide](glossary.md#pyodide). Only the browser test, on the
+demo statement, checks that.
 
 What was done: the limits are written down. Nothing else yet.
 

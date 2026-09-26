@@ -671,3 +671,30 @@ change does not touch: recurring precision 0.861, below 0.90, and unusual precis
 0.4589, below 0.50. The new habit test also misses real double charges at a price the
 person pays often. The generator never plants those, so this run cannot measure that
 loss. ADR 0007 explains it.
+
+### 2026-09-26: correcting this plan's wording on the demo statement and the `--dump` flag
+
+What changed: nothing in the generator, the engine, the thresholds, the matching or the
+metrics. This entry corrects two claims this plan made about its own build, found while
+writing the README and docs task. Both claims were about how the project would be built,
+not about a detection rule or a reported number, so neither `reports/metrics.json` nor
+the failure bar depends on either one.
+
+- "The synthetic statement generator" section above, and the "Demo" row of the seeds
+  table below, say the demo statement is generator output at seed `9000`. That was never
+  built. The committed demo fixture,
+  `tests/fixtures/synthetic_demo_statement.csv`, is a short file written by hand for
+  `make demo`, not generator output. It holds a real, recognizable merchant name,
+  `NETFLIX.COM`, in an invented statement; ADR 0005 allows this, because the row itself
+  carries no real person's data. [DATASHEET.md](../DATASHEET.md) already says the
+  fixture is hand-written, and the README and `docs/tutorial.md` describe it the same
+  way, not as seed `9000`.
+- The same section says an optional `--dump DIR` command-line flag writes the
+  generator's CSV text and answer key to a folder. No such flag was built.
+  `generate_statement()` in `evaluation/generator.py` takes a `dump_dir` argument only;
+  there is no command-line flag for it, and `docs/reference.md` and `DATASHEET.md`
+  describe it that way.
+
+Where the results are: unchanged. This entry changes no file except this one; it
+corrects wording only, in the open, rather than leaving it silently wrong, following the
+rule at the top of this plan.
