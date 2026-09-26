@@ -29,22 +29,28 @@
       could receive one.
     </p>
     <details>
-      <summary>How this page proves it, not just says it</summary>
+      <summary>How you can check this</summary>
       <ul>
         <li>
           The Content-Security-Policy this page sets blocks any request this page's
-          own code could try to make to another origin. Its exact, current value:
+          own code could try to make to another origin. It still allows requests to
+          this site's own address. Its exact, current value:
           <pre><code id="csp-value">(reading the page's own policy&hellip;)</code></pre>
         </li>
         <li>
-          A test in this project's continuous integration loads this page, runs it
-          against a made-up statement, and fails the build if the page makes any
-          request to another origin, a request that is not a plain <code>GET</code>,
-          or a request outside a fixed list of this site's own files.
+          A test in this project's continuous integration loads this page in
+          Chromium, runs it once on a made-up statement, and fails the build if the
+          page makes any request to another origin, a request that is not a plain
+          <code>GET</code>, or a request outside a fixed list of this site's own
+          files.
         </li>
         <li>
           The source code for this page and for the exact rules it runs is public:
           <a href="https://github.com/Iliya-Valizadeh/second-look" rel="noopener">github.com/Iliya-Valizadeh/second-look</a>.
+        </li>
+        <li>
+          Browser extensions you have installed run outside this policy and can read
+          any page, including this one.
         </li>
       </ul>
     </details>
@@ -130,6 +136,10 @@
         </div>
         <fieldset>
           <legend>Which sign means money leaving the account?</legend>
+          <p class="hint">
+            Find a row you know was a purchase and check its sign. If this choice is
+            wrong, every charge is read as money coming in and no charge is flagged.
+          </p>
           <div class="field">
             <input type="radio" name="sign-convention" id="sign-negative" value="charges_negative" checked>
             <label for="sign-negative">Charges are negative (a $12.00 charge shows as -12.00)</label>
@@ -172,7 +182,17 @@
   <section id="screen-results" hidden aria-labelledby="results-heading">
     <h2 id="results-heading">3. Worth a second look</h2>
     <p id="results-summary"></p>
-    <p id="results-empty" hidden>Nothing worth a second look in this statement.</p>
+    <p id="results-empty" hidden>
+      No charge matched any of the four rules. The rules miss some patterns, such as
+      bills whose amount changes each month. If you expected flags, check the sign
+      choice on the previous screen.
+    </p>
+    <p class="hint">
+      These rules were tested only on made-up statements. Some flags will be wrong, and
+      some charges worth a look will be missed. The project's
+      <a href="https://github.com/Iliya-Valizadeh/second-look/blob/main/docs/whats_weak.md" rel="noopener">list of known limits</a>
+      says where.
+    </p>
 
     <ol id="results-list" class="results-list"></ol>
 
