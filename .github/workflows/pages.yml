@@ -6,9 +6,10 @@ name: Deploy web door to Pages
 # `enablement: false` on the Setup Pages step below means this workflow never turns
 # GitHub Pages on for this repository by itself. Someone with repo admin access
 # still has to visit Settings > Pages and set the source to "GitHub Actions" first
-# (a later, separate task, once the repo is public). Until that happens, this
-# workflow's deploy job fails with a clear "Pages is not enabled" error. That
-# failure is expected and does not mean the built site is broken.
+# (a later, separate task, once the repo is public). Until that happens, the `check`
+# job below finds Pages isn't configured (a 404 from the Pages API) and every later
+# job is skipped, not failed — a skipped run doesn't email anyone. Once Pages is on,
+# the same push (or the next one) builds and deploys for real.
 on:
   push:
     branches: [main]
@@ -23,7 +24,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.check.outputs.enabled }}
+    steps:
+      - name: Check whether GitHub Pages is configured for this repo
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" >/dev/null 2>&1; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages isn't enabled yet for this repo (Settings > Pages > Source: GitHub Actions). Skipping the build and deploy jobs; this is expected until that's set up."
+          fi
+
   build:
+    needs: check
+    if: needs.check.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +70,8 @@ jobs:
           path: web
 
   deploy:
-    needs: build
+    needs: [check, build]
+    if: needs.check.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
