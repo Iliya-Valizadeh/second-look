@@ -7,7 +7,8 @@ Date: 2026-09-25. Status: accepted.
 `second-look` reads a bank or card statement and lists charges worth a second look.
 People reach it in two ways. Technical users install it with `pip` and run a command
 (door 1). Everyone else opens a web page where the same Python code runs inside the
-browser through Pyodide, a build of Python for WebAssembly (door 2). Both doors must
+browser through [Pyodide](../glossary.md#pyodide), a build of Python for WebAssembly
+(door 2). Both doors must
 give the same answer for the same file, so the logic can exist only once.
 
 Pyodide ships the Python standard library in its core download. Any other package
