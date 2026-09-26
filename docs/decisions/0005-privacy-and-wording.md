@@ -76,7 +76,8 @@ say that the merchant or the bank can explain a charge.
 
 - On the web page, each flag has three choices: "Right", "Wrong" and "Not sure".
 - A "Save my feedback" button builds a JSON file in the browser and hands it to the
-  browser's normal download. No request is made. The CSP in
+  browser's normal download. No request is made. The
+  [CSP](../glossary.md#content-security-policy-csp) in
   [ADR 0004](0004-web-door-pyodide-and-csp.md) would block one to any other origin.
 - The file holds, for each marked flag: the flag type, the rule that fired, its numbers
   (such as the ratio or the score), the period for recurring charges, and the user's
