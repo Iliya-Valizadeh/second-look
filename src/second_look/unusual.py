@@ -66,11 +66,13 @@ def detect_unusual(
 
     by_merchant: dict[str, list[Transaction]] = {}
     by_category: dict[str, list[Transaction]] = {}
+    # "First charge at a merchant" counts every charge, recurring ones too (ADR 0002).
     first_seen_line: dict[str, int] = {}
-    for txn in sorted(eligible, key=lambda t: (t.date, t.line)):
+    for txn in sorted(charges, key=lambda t: (t.date, t.line)):
+        first_seen_line.setdefault(merchant_key(txn.description), txn.line)
+    for txn in eligible:
         key = merchant_key(txn.description)
         by_merchant.setdefault(key, []).append(txn)
-        first_seen_line.setdefault(key, txn.line)
         if txn.category is not None:
             by_category.setdefault(txn.category, []).append(txn)
 
