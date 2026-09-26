@@ -29,6 +29,10 @@
       "weekly": 2
     },
     "misses_foreign_currency": 2,
+    "misses_new_price_charges_range": {
+      "max": 58,
+      "min": 3
+    },
     "misses_with_one_off_extra_before_new_price": 14,
     "wrong_flags": 0
   },

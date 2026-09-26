@@ -528,6 +528,12 @@ def run(seeds: range = range(TEST_SEED_FIRST, TEST_SEED_LAST + 1)) -> dict[str, 
         },
     }
 
+    new_price_counts = [int(n) for n in out["price_increase"]["misses_by_new_price_charges"]]
+    out["price_increase"]["misses_new_price_charges_range"] = {
+        "min": min(new_price_counts, default=0),
+        "max": max(new_price_counts, default=0),
+    }
+
     ratios = sorted(out["unusual"].pop("new_merchant_miss_ratio_to_typical"))
     out["unusual"]["new_merchant_miss_ratio_to_typical"] = {
         "count": len(ratios),
