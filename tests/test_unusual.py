@@ -157,6 +157,24 @@ def test_flags_a_very_large_charge_at_an_established_merchant() -> None:
     )
 
 
+def test_many_repeated_small_charges_do_not_make_ordinary_charges_look_large() -> None:
+    # ADR 0006: 150 transit fares of $3.35 would make the plain median $3.35, so every
+    # grocery bill of $34 or more would look "10 times your typical charge". Counting
+    # each distinct amount once keeps the typical charge near the grocery bills.
+    fares = [txn(2 + i, (i * 2) // 3, "3.35", "CITY TRANSIT") for i in range(150)]
+    groceries = [txn(200 + i, i * 4, f"{40 + i * 2}.00", "CORNER GROCER") for i in range(25)]
+    assert detect_unusual([*fares, *groceries], recurring_flags=[]) == []
+
+
+def test_the_typical_charge_leaves_out_the_charge_being_judged() -> None:
+    # Every other charge is $10.00. If the $150.00 counted towards its own typical
+    # charge, the distinct amounts {10, 150} would give a typical charge of $80.00.
+    charges = _filler(2, 30) + [txn(32, 70, "150.00", "ONE OFF STORE")]
+    flags = detect_unusual(charges, recurring_flags=[])
+    assert len(flags) == 1
+    assert "15.0 times your typical charge ($10.00)" in flags[0].reason
+
+
 # --- recurring exclusion --------------------------------------------------------------
 
 

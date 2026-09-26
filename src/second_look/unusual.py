@@ -9,14 +9,17 @@ you" needs a record of what is usual.
 The modified z-score (Iglewicz and Hoaglin, cited in ADR 0002) scores a charge's log
 amount against its own merchant's history and its own category's history. Two simple
 rules, a new merchant and a very large charge, catch the cases with too little
-history for a score. When more than one test fires on a charge, they share one flag,
-so the sentences are joined into its one `reason`.
+history for a score. They compare a charge with the user's typical charge, which ADR
+0006 defines as the median of the distinct charge amounts. When more than one test
+fires on a charge, they share one flag, so the sentences are joined into its one
+`reason`.
 """
 
 from __future__ import annotations
 
 import math
 import statistics
+from collections import Counter
 from collections.abc import Sequence
 from datetime import date as Date
 from decimal import Decimal
@@ -59,7 +62,7 @@ def detect_unusual(
 
     recurring_lines = {line for flag in recurring_flags for line in flag.lines}
     eligible = [t for t in charges if t.line not in recurring_lines]
-    all_median = statistics.median(t.amount for t in charges)
+    amount_counts = Counter(t.amount for t in charges)
 
     by_merchant: dict[str, list[Transaction]] = {}
     by_category: dict[str, list[Transaction]] = {}
@@ -87,12 +90,13 @@ def detect_unusual(
             if category_reason is not None:
                 reasons.append(category_reason)
 
+        typical = _typical_charge(amount_counts, txn.amount)
         if first_seen_line[key] == txn.line:
-            new_merchant_reason = _new_merchant_reason(txn, statement_start, all_median)
+            new_merchant_reason = _new_merchant_reason(txn, statement_start, typical)
             if new_merchant_reason is not None:
                 reasons.append(new_merchant_reason)
 
-        large_reason = _large_charge_reason(txn, all_median)
+        large_reason = _large_charge_reason(txn, typical)
         if large_reason is not None:
             reasons.append(large_reason)
 
@@ -108,6 +112,24 @@ def detect_unusual(
                 )
             )
     return flags
+
+
+def _typical_charge(amount_counts: Counter[Decimal], own_amount: Decimal) -> Decimal:
+    """The user's typical charge: the median of the distinct charge amounts (ADR 0006).
+
+    Each amount counts once, however often it repeats. A transit fare paid four
+    hundred times, or a coffee at a fixed menu price, would otherwise pull the median
+    down to a few dollars, and then every ordinary grocery bill looks "10 times your
+    typical charge". ADR 0002 used the plain median of all charges, and the first
+    evaluation run showed that failure.
+
+    `amount_counts` counts every charge amount in the statement. The charge being
+    judged is left out, as ADR 0002 does for the score: its amount is dropped when no
+    other charge has it.
+    """
+    if amount_counts[own_amount] > 1:
+        return statistics.median(amount_counts)
+    return statistics.median(amount for amount in amount_counts if amount != own_amount)
 
 
 def _modified_z(amount: Decimal, history: Sequence[Transaction]) -> float:
@@ -156,29 +178,27 @@ def _category_reason(txn: Transaction, history: Sequence[Transaction]) -> str | 
     )
 
 
-def _new_merchant_reason(
-    txn: Transaction, statement_start: Date, all_median: Decimal
-) -> str | None:
+def _new_merchant_reason(txn: Transaction, statement_start: Date, typical: Decimal) -> str | None:
     days = (txn.date - statement_start).days
     if days < NEW_MERCHANT_MIN_DAYS:
         return None
-    if txn.amount < all_median * NEW_MERCHANT_RATIO or txn.amount < UNUSUAL_MIN_AMOUNT:
+    if txn.amount < typical * NEW_MERCHANT_RATIO or txn.amount < UNUSUAL_MIN_AMOUNT:
         return None
-    ratio = txn.amount / all_median
+    ratio = txn.amount / typical
     return (
         f"{_fmt_money(txn.amount)} on {txn.date.isoformat()} is your first charge at "
         f"{txn.description} in {days} days of history, and {_fmt_ratio(ratio)} times "
-        f"your typical charge ({_fmt_money(all_median)})."
+        f"your typical charge ({_fmt_money(typical)})."
     )
 
 
-def _large_charge_reason(txn: Transaction, all_median: Decimal) -> str | None:
-    if txn.amount < all_median * LARGE_CHARGE_RATIO or txn.amount < UNUSUAL_MIN_AMOUNT:
+def _large_charge_reason(txn: Transaction, typical: Decimal) -> str | None:
+    if txn.amount < typical * LARGE_CHARGE_RATIO or txn.amount < UNUSUAL_MIN_AMOUNT:
         return None
-    ratio = txn.amount / all_median
+    ratio = txn.amount / typical
     return (
         f"{_fmt_money(txn.amount)} at {txn.description} on {txn.date.isoformat()} is "
-        f"{_fmt_ratio(ratio)} times your typical charge ({_fmt_money(all_median)})."
+        f"{_fmt_ratio(ratio)} times your typical charge ({_fmt_money(typical)})."
     )
 
 
