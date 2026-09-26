@@ -611,6 +611,15 @@
     "resamples": 2000,
     "seed": 4242
   },
+  "lighthouse": {
+    "accessibility": 100,
+    "fetch_time": "2026-09-26T09:50:32.073Z",
+    "lighthouse_version": "12.8.2",
+    "performance": 100,
+    "preset": "mobile",
+    "report": "reports/lighthouse/report.json",
+    "requested_url": "http://127.0.0.1:8977/"
+  },
   "secondary": {
     "by_account_type": {
       "chequing": {

@@ -7,7 +7,7 @@ DOCS := README.md CLAIMS.md CHANGELOG.md AI_USAGE.md $(wildcard MODEL_CARD.md DA
 WEB_PYODIDE_DIR := web/pyodide
 WEB_DIST_DIR := web/dist
 
-.PHONY: setup lint test eval demo check-docs web-pyodide web-wheel web-build web-test all
+.PHONY: setup lint test eval demo check-docs web-pyodide web-wheel web-build web-test lighthouse all
 
 setup:
 	uv sync
@@ -52,5 +52,20 @@ web-build: web-pyodide web-wheel
 web-test: web-build
 	$(RUN) playwright install --with-deps chromium
 	$(RUN) pytest web/tests -p no:cacheprovider --no-cov -q
+
+# Runs Lighthouse (Node/npx) against web/ served locally, then copies its
+# performance and accessibility scores into reports/metrics.json. Needs Node.js and
+# web-build first. Not part of `all`: CI doesn't have Node, so this is run locally
+# and its report is committed (docs/reference.md and STATUS.md say so).
+lighthouse: web-build
+	$(RUN) python -m http.server 8977 --directory web --bind 127.0.0.1 & \
+	echo $$! > /tmp/second_look_lighthouse_server.pid; \
+	sleep 1; \
+	npx --yes lighthouse@12 http://127.0.0.1:8977/ \
+		--output=json --output-path=reports/lighthouse/report.json \
+		--chrome-flags="--headless=new --no-sandbox" \
+		--only-categories=performance,accessibility; \
+	kill $$(cat /tmp/second_look_lighthouse_server.pid) 2>/dev/null || true
+	$(RUN) python tools/lighthouse_scores.py reports/lighthouse/report.json
 
 all: setup lint test eval demo check-docs

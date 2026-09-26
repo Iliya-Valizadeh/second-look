@@ -12,6 +12,7 @@ Facts to look up: commands, files and settings.
 | `make eval` | Runs the evaluation and writes `reports/metrics.json` |
 | `make demo` | Runs a short demo that needs no downloads or keys |
 | `make check-docs` | Runs the claims, readability, AI-writing signs, link and README checks |
+| `make lighthouse` | Serves `web/` locally and runs Lighthouse (mobile preset) against it, then copies the performance and accessibility scores into `reports/metrics.json`. Needs Node.js; not part of `all` since CI has no Node |
 | `make all` | Runs every step above in order |
 
 ## Output files
