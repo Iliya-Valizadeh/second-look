@@ -62,6 +62,7 @@ one line by hand, add the comment `<!-- not-a-claim -->` to it.
 | Spike recall by planted factor, then by account type | 0.4783, 0.8494, 0.6994, 0.7975 | `reports/error_analysis.json#unusual.derived` | `make error-analysis` |
 | Varying bills planted, and recall on them | 200, 0.015 | `reports/metrics.json#secondary.recurring_variable_recall` | `make eval` |
 | Planted price increases | 206 | `reports/metrics.json#events.price_increase` | `make eval` |
+| Planted fixed-amount recurring series; refunded duplicates | 1140, 103 | `reports/metrics.json#events` | `make eval` |
 
 Example row, for the format only:
 `| Test AUC | 0.58 (0.55 to 0.61) | reports/metrics.json#auc | make eval |`
