@@ -45,9 +45,9 @@ result as JSON instead of plain text.
 ## Step 5: try the web page
 
 The web page (Door 2) runs the same rules inside your browser with
-[Pyodide](glossary.md#pyodide), so a statement never has to leave your device. There is
-no live page yet; enabling GitHub Pages is a "Needs Iliya" item. To try it on your own
-machine, build it once:
+[Pyodide](glossary.md#pyodide), so a statement never has to leave your device. The live page is at
+[iliya-valizadeh.github.io/second-look](https://iliya-valizadeh.github.io/second-look/).
+To try it on your own machine, build it once:
 
 ```bash
 make web-build
