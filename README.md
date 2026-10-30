@@ -76,7 +76,6 @@ short of their own line; duplicate and price increase clear theirs by a wide mar
   [reports/error_analysis.md](reports/error_analysis.md).
 - How ready this is for production, scored against Breck et al.'s checklist:
   [docs/ml_test_score.md](docs/ml_test_score.md).
-- How the AI assistant was used: [AI_USAGE.md](AI_USAGE.md).
 
 ## How it works
 
@@ -142,7 +141,7 @@ The full, ranked list is in [docs/whats_weak.md](docs/whats_weak.md). What matte
 | `reports/` | Generated results, including metrics.json |
 | `src/` | The package code |
 | `tests/` | Unit and data tests |
-| `tools/` | Checks for claims, readability, AI-writing signs and links |
+| `tools/` | Checks for claims, readability, writing style and links |
 | `web/` | The web door: the same package running in the browser through Pyodide |
 <!-- repo-map:end -->
 

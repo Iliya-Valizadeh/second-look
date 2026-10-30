@@ -95,7 +95,7 @@ Each preset must have:
 - a test fixture that holds only the header row, plus a test that the preset maps it
 
 Sources that do not count: forum posts, blogs, other open-source tools, screenshots from
-third parties, and anything written from memory or by an AI assistant.
+third parties, and anything written from memory.
 
 When a file's header row matches a preset's confirmed header exactly, the page
 suggests that preset. The user still sees the preview and confirms.

@@ -11,7 +11,7 @@ Facts to look up: commands, files and settings.
 | `make test` | Runs pytest with a coverage report for `src/` |
 | `make eval` | Runs the evaluation and writes `reports/metrics.json` |
 | `make demo` | Runs a short demo that needs no downloads or keys |
-| `make check-docs` | Runs the claims, readability, AI-writing signs, link and README checks |
+| `make check-docs` | Runs the claims, readability, writing-style, link and README checks |
 | `make error-analysis` | Sorts every wrong flag and miss on the test seeds by cause and writes `reports/error_analysis.json` |
 | `make web-build` | Fetches the pinned [Pyodide](glossary.md#pyodide) files and builds the package's wheel for the web page. Needs the network |
 | `make web-test` | Builds the web page, then runs its headless-browser test in Chromium |
