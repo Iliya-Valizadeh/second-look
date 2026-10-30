@@ -61,7 +61,7 @@ web-test: web-build
 # Runs Lighthouse (Node/npx) against web/ served locally, then copies its
 # performance and accessibility scores into reports/metrics.json. Needs Node.js and
 # web-build first. Not part of `all`: CI doesn't have Node, so this is run locally
-# and its report is committed (docs/reference.md and STATUS.md say so).
+# and its report is committed (docs/reference.md says so).
 lighthouse: web-build
 	$(RUN) python -m http.server 8977 --directory web --bind 127.0.0.1 & \
 	echo $$! > /tmp/second_look_lighthouse_server.pid; \

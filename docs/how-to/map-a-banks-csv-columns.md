@@ -75,6 +75,6 @@ sign before you press "Show results".
 ## If you have a bank's own header row
 
 A confirmed preset needs a link to the bank's own help page showing the exact header
-row, or a real header row (the header line only, with no transaction rows) from Iliya
+row, or a real header row (the header line only, with no transaction rows) from my own export
 ([ADR 0003](../decisions/0003-importing-statements.md)). If you have one, open an issue
 with the source.
