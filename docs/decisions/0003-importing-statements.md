@@ -10,8 +10,7 @@ Some write dates month-first, others day-first, and a date such as `03/04/2026` 
 both. A wrong guess here does not crash. It silently turns charges into refunds or
 moves every date, and every flag after that is wrong.
 
-The rule for this project (from `_portfolio/STATUS.md` and the plan) is that no bank
-format is ever guessed. Good sources for a bank's real layout are rare. Most are
+The rule I set for this project is that no bank format is ever guessed. Good sources for a bank's real layout are rare. Most are
 forum posts or other people's code, which may be out of date.
 
 ## Options
@@ -84,13 +83,13 @@ A named-bank preset is a saved mapping with a bank name and a source. A preset i
 only when one of these exists:
 
 - a URL to the bank's own help page that shows the exact header row of its CSV export
-- a real header row that Iliya provides from his own export (the header line only, with
-  no transaction rows)
+- a real header row that I take from my own export (the header line only, with no
+  transaction rows)
 
 Each preset must have:
 
-- the source in the code, next to the preset: the URL, or "header row provided by
-  Iliya" with the date
+- the source in the code, next to the preset: the URL, or "header row from my own
+  export" with the date
 - the same source in `docs/reference.md`
 - a test fixture that holds only the header row, plus a test that the preset maps it
 
