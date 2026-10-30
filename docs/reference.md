@@ -11,7 +11,7 @@ Facts to look up: commands, files and settings.
 | `make test` | Runs pytest with a coverage report for `src/` |
 | `make eval` | Runs the evaluation and writes `reports/metrics.json` |
 | `make demo` | Runs a short demo that needs no downloads or keys |
-| `make check-docs` | Runs the claims, readability, AI-writing signs, link and README checks |
+| `make check-docs` | Runs the claims, readability, writing-style, link and README checks |
 | `make error-analysis` | Sorts every wrong flag and miss on the test seeds by cause and writes `reports/error_analysis.json` |
 | `make web-build` | Fetches the pinned [Pyodide](glossary.md#pyodide) files and builds the package's wheel for the web page. Needs the network |
 | `make web-test` | Builds the web page, then runs its headless-browser test in Chromium |
@@ -85,8 +85,8 @@ their money. The section title on every screen is "Worth a second look".
 ## Bank CSV presets
 
 [ADR 0003](decisions/0003-importing-statements.md) allows a named preset only when a
-bank's own help page shows the exact CSV header row, or Iliya provides a real header row
-from his own export. Checked on 2026-09-26, on each bank's own site only (never a
+bank's own help page shows the exact CSV header row, or I provide a real header row from
+my own export. Checked on 2026-09-26, on each bank's own site only (never a
 third-party page): no preset is confirmed for any of the five banks named in the plan.
 Each bank's own site confirms that a CSV export exists, but none of these pages shows the
 literal column header text.
@@ -101,4 +101,4 @@ literal column header text.
 
 All five stay unconfirmed. See `docs/whats_weak.md` for what a confirmed preset would
 change. A future preset needs either a link to a bank page that shows the literal header
-row, or a real header row (header only, no transactions) from Iliya.
+row, or a real header row (header only, no transactions) from my own export.

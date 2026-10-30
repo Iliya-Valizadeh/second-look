@@ -220,7 +220,7 @@ What was done: the limits are written down. Nothing else yet.
 There is no preset for RBC, TD, CIBC, BMO or Scotiabank. So every user maps the
 columns by hand, even for a common bank.
 [ADR 0003](decisions/0003-importing-statements.md) allows a preset only from the
-bank's own help page or a real header row from Iliya. A search of each bank's own
+bank's own help page or a real header row from my own export. A search of each bank's own
 help and support pages on 2026-09-26 found none that lists the exact CSV header names.
 
 This costs one setup step. It changes no detection rule and no result, which is why it

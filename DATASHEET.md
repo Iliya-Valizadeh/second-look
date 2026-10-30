@@ -132,8 +132,8 @@ It should not be used for:
 No generated statement is committed. Anyone can remake one with
 `generate_statement(seed)`, and pass `dump_dir` to write the CSV and answer key to a
 folder. The eval plan asked for a `--dump DIR` command-line flag. It exists only as
-this function argument. The code is under the repo's MIT license. Iliya Valizadeh maintains
-it in this repo.
+this function argument. The code is under the repo's MIT license. I maintain it in this
+repo.
 
 The demo statement `tests/fixtures/synthetic_demo_statement.csv` is not generator
 output. It is a short hand-written file. The eval plan names seed `9000` for the demo;

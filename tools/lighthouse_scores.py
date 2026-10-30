@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 METRICS_PATH = REPO_ROOT / "reports" / "metrics.json"
 
 # The two categories the house standard's Lighthouse gate checks. Both must be 90 or
-# more (docs/whats_weak.md and STATUS.md task "Bank presets and Lighthouse").
+# more (docs/whats_weak.md).
 CATEGORIES = ("performance", "accessibility")
 
 

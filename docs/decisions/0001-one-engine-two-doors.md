@@ -24,8 +24,8 @@ In that same run, these standard library modules imported with no error: `csv`,
 everything the engine needs. The data is small. A statement has hundreds or a few
 thousand rows, so there is no speed reason to reach for numpy.
 
-The template's `pyproject.toml` sets `requires-python = ">=3.11"`, and Iliya's machine
-runs Python `3.11`.
+The template's `pyproject.toml` sets `requires-python = ">=3.11"`, and my machine runs
+Python `3.11`.
 
 ## Options
 
