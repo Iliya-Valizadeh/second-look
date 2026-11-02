@@ -595,7 +595,7 @@ The evaluation task adds tests that check, on the tuning seeds:
 
 ### First test run
 
-The first test run is commit `f532add`, at the ADR 0002 thresholds as written. Step 3
+The first test run is commit `0819f1b`, at the ADR 0002 thresholds as written. Step 3
 above asked for this hash when the run was made. It was added here on 2026-09-26, with
 the change below.
 
@@ -640,7 +640,7 @@ duplicate precision are unchanged, since this change does not touch those rules.
 flags across all types are 8.87 per statement, still above 5. Duplicates alone give
 5.45 of them.
 
-The run described in this section is commit `7852a68`. Its `reports/metrics.json` is
+The run described in this section is commit `8a86614`. Its `reports/metrics.json` is
 kept, byte for byte, as `reports/metrics_adr0006_run.json`, so the numbers above can
 still be checked after later runs.
 

@@ -13,7 +13,7 @@ of all charges in the statement. The very-large rule fires on a charge that is a
 `LARGE_CHARGE_RATIO = 10` times that same median. Both also need at least
 `UNUSUAL_MIN_AMOUNT = 25` dollars.
 
-The first test run of the synthetic evaluation (commit `f532add`, see
+The first test run of the synthetic evaluation (commit `0819f1b`, see
 `docs/eval_plan.md`) found every planted unusual charge, but its unusual flags were
 almost all wrong. [Precision](../glossary.md#precision) was 0.0136, and the engine raised 187.17 wrong unusual
 flags per statement on average.

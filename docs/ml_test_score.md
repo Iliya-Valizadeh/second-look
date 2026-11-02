@@ -30,7 +30,7 @@ gaps in reliability are still likely.
 
 Following template ADR 0004, a test earns one point only after CI (continuous
 integration, the checks GitHub runs on every push) has run it on GitHub. The tests
-cited below passed in CI run `36234302083`, on commit `3c1ec5a` on `main`. That run
+cited below passed in CI run `36234302083`, on commit `4c02937` on `main`. That run
 includes the Python tests, the docs checks and the headless-browser test of the web
 page.
 

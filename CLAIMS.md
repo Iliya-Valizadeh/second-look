@@ -19,7 +19,7 @@ one line by hand, add the comment `<!-- not-a-claim -->` to it.
 | Unusual recall | 0.835 (0.8004 to 0.8677) | `reports/metrics.json#engine.unusual.recall` | `make eval` |
 | Wrong unusual flags per statement | 2.535 | `reports/metrics.json#engine.unusual` | `make eval` |
 | Unusual F1 difference from the [baseline](docs/glossary.md#baseline) | 0.4342 to 0.499 | `reports/metrics.json#f1_difference.unusual` | `make eval` |
-| After ADR 0006: wrong flags per statement, all types | 8.87 | `reports/metrics_adr0006_run.json#failure_bar.wrong_flags_per_statement` | `make eval` at commit `7852a68` |
+| After ADR 0006: wrong flags per statement, all types | 8.87 | `reports/metrics_adr0006_run.json#failure_bar.wrong_flags_per_statement` | `make eval` at commit `8a86614` |
 | First run: wrong duplicate flags per statement | 5.45 | `reports/metrics.json#first_run.metrics.engine.duplicate` | `make eval` |
 | Duplicate precision | 0.9808 (0.9563 to 1.0) | `reports/metrics.json#engine.duplicate.precision` | `make eval` |
 | Duplicate recall | 0.9903 (0.9752 to 1.0) | `reports/metrics.json#engine.duplicate.recall` | `make eval` |

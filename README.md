@@ -67,7 +67,7 @@ short of their own line; duplicate and price increase clear theirs by a wide mar
 ## How I worked
 
 - Evaluation plan, committed before any evaluation code or result:
-  [docs/eval_plan.md](docs/eval_plan.md) (commit `ccd8042`).
+  [docs/eval_plan.md](docs/eval_plan.md) (commit `1b32aa3`).
 - Decision records: [docs/decisions/](docs/decisions/), including the two real fixes
   made after the first evaluation run,
   [ADR 0006](docs/decisions/0006-typical-charge-for-simple-unusual-rules.md) and

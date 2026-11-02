@@ -14,7 +14,7 @@ merchant and amount form close pairs like this three or more times in the statem
 That last test is the habit exception. It was meant for charges such as a transit fare
 paid twice a day.
 
-The first test run of the synthetic evaluation (commit `f532add`, see
+The first test run of the synthetic evaluation (commit `0819f1b`, see
 `docs/eval_plan.md`) found almost every planted duplicate, but most of its duplicate
 flags were wrong. [Precision](../glossary.md#precision) was 0.1577, and the engine
 raised 5.45 wrong duplicate flags per statement on average. The fix in
