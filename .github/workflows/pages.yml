@@ -8,7 +8,7 @@ name: Deploy web door to Pages
 # still has to visit Settings > Pages and set the source to "GitHub Actions" first
 # (a later, separate task, once the repo is public). Until that happens, the `check`
 # job below finds Pages isn't configured (a 404 from the Pages API) and every later
-# job is skipped, not failed — a skipped run doesn't email anyone. Once Pages is on,
+# job is skipped, not failed: a skipped run doesn't email anyone. Once Pages is on,
 # the same push (or the next one) builds and deploys for real.
 on:
   push:
